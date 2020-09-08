@@ -54,6 +54,19 @@
   background: var(--color-secundary);
   margin-right: 0;
 }
+
+.login {
+  text-align: center;
+  font-size: larger;
+  color: var(--color-text-title);
+  font-weight: bold;
+}
+
+.login:visited{
+  text-decoration:none;
+  color: var(--color-text-title);
+  }
+
 .buttons-container a img {
   width: 4rem;
   margin-right: 2.4rem;
