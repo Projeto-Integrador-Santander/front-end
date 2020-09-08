@@ -48,6 +48,21 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  text-align: center;
+}
+
+.logo img {
+  border-radius: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  width: 70%;
+}
+
+.logo span {
+  font-size: large;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container-login {
