@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./partials/login.css">
+    <link rel="stylesheet" href="./../css/main.css">
+    <link rel="stylesheet" href="./../partials/login.css">
     <title>Login</title>
 </head>
 
@@ -13,14 +13,18 @@
     <div class="container">
         <header class="header-logo">
             <div class="logo">
-                <img src="./img/logo.svg" alt="Proffy">
+                <img src="./../img/logo.svg" alt="Proffy">
                 <span>Sua plataforma de estudos online</span>
             </div>
         </header>
 
         <main class="container-login">
-            <form>
-                <h1>Fazer login</h1>
+            <form action="{{logar}}" id="login" method="POST">
+                <h1 style="text-align: center;">
+                    {{titulo}}
+                    <br>
+                    Login
+                </h1>
                 <div class="inputs">
                     <div class="form-group">
                         <label class="Active" for="email">E-mail</label>
@@ -53,11 +57,11 @@
             <footer class="footer">
                 <span>
                     Não tem conta?
-                    <a href="/signup">Cadastre-se</a>
+                    <a href="{{cadastrar}}">Cadastre-se</a>
                 </span>
                 <span>
                     É de graça
-                    <img src="./img/icons/purple-heart.svg" alt="Coração">
+                    <img src="./../img/icons/purple-heart.svg" alt="Coração">
                 </span>
             </footer>
         </main>

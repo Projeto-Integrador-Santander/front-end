@@ -49,19 +49,10 @@ async function pageStudy(req, res) {
     }
 }
 
-async function pageAluno(req, res) {
-    //caso haja erro na hora da consulta do banco
-    try {
-        return res.render('aluno.html', { subjects, weekdays })
-
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 async function pageGiveclasses(req, res) {
     return res.render("give-classes.html", { subjects, weekdays })
 }
+
 async function saveClasses(req, res) {
     const createProffy = require('./database/createProffys')
     const proffyValue = {
@@ -97,6 +88,7 @@ async function saveClasses(req, res) {
         console.log(error)
     }
 }
+
 async function pageLogin(req, res) {
     //caso haja erro na hora da consulta do banco
     try {
@@ -107,12 +99,49 @@ async function pageLogin(req, res) {
     }
 }
 
+async function paginaLoginEstudante(req, res) {
+    const titulo = 'Área do Estudante';
+    const logar = '/logar-estudante';
+    const cadastrar = '/cadastrar-estudante';
+    return res.render('login.html', { titulo, logar, cadastrar })
+}
+
+async function paginaCadastrarEstudante(req, res) {
+    return res.render('aluno.html', { subjects, weekdays })
+}
+
+async function logarEstudante(req, res) {
+    return res.redirect("/study")
+}
+
+async function paginaLoginProfessor(req, res) {
+    const titulo = 'Área do Professor';
+    const logar = '/logar-professor';
+    const cadastrar = '/cadastrar-professor';
+    return res.render('login.html', { titulo, logar, cadastrar })
+}
+
+async function logarProfessor(req, res) {
+    return res.redirect("/give-classes")
+}
+
+async function paginaCadastrarProfessor(req, res) {
+    return res.render('professor/cadastro.html', { })
+}
+
 
 module.exports = {
     pageLanding,
     pageStudy,
-    pageAluno,
     pageGiveclasses,
     saveClasses,
-    pageLogin
+    pageLogin,
+
+    paginaLoginEstudante,
+    paginaCadastrarEstudante,
+    logarEstudante,
+
+    paginaLoginProfessor,
+    logarProfessor,
+    paginaCadastrarProfessor
 }

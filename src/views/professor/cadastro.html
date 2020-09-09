@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--lang é um atributo-->
 <html lang="en">
 
 <head>
@@ -14,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&amp;family=Poppins:wght@400;600&amp;display=swap"
         rel="stylesheet">
-    <script src="./scripts/addMateria.js" defer></script>
+    <script src="./scripts/addField.js" defer></script>
 </head>
 
 <body id="page-give-classes">
@@ -27,9 +26,8 @@
                 <img src="./img/logo.svg" alt="Proffy">
             </div>
             <div class="header-content">
-                <strong>Que incrível que você que contratar aulas</strong>
-                <p>O primeiro passo, é preencher esse formulário de interesse</p>
-
+                <strong>Que incrível que você quer dar aulas</strong>
+                <p>O primeiro passo, é preencher esse formulário de inscrição</p>
             </div>
         </header>
         <main>
@@ -39,39 +37,23 @@
                     <div class="input-block">
                         <label for="name">Nome completo</label>
                         <input name="name" id="name" required>
-                    </div>                   
+                    </div>
                     <div class="input-block">
                         <label for="email">E-mail</label>
                         <input name="email" id="email" required>
                     </div> 
                     <div class="input-block">
-                        <label for="senha">Senha</label>
-                        <input type="password" name="senha" id="senha" required>
-                    </div> 
-                    <div class="input-block">
-                        <label for="senhaConfirmar">Confirmar Senha</label>
-                        <input type="password" name="senhaConfirmar" id="senhaConfirmar" required>
-                    </div> 
+                        <label for="avatar">Link da sua foto <small>(começa com https://) </small></label>
+                        <input name="avatar" id="avatar" type="url" required>
+                    </div>
                     <div class="input-block">
                         <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
                         <input name="whatsapp" id="whatsapp" type="number" required>
-                    </div>                    
-                </fieldset>
-                <fieldset id="materia-items">
-                    <legend>Sobre requisição da aula
-                        <button type="button" id="add-materia"> + Nova Matéria</button>
-                    </legend>
-                    <div class="select-block">
-                        <label for="subject">Matéria</label>
-                        <select name="subject" id="subject" required>
-                            <option value="" selected disabled>Selecione uma opção</option>
-                            {%for subject in subjects %}
-                            <option value="{{loop.index}}">
-                                {{subject}}
-                            </option>
-                            {%endfor%}
-                          </select>
-                    </div>                    
+                    </div>
+                    <div class="textarea-block">
+                        <label for="bio">Biografia</label>
+                        <textarea name="bio" id="bio" required></textarea>
+                    </div>
                 </fieldset>
             </form>
             <footer>
