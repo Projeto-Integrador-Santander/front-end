@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<!--lang é um atributo-->
-<html lang="en">
+
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proffy | Sua plataforma de estudos online</title>
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./partials/header.css">
-    <link rel="stylesheet" href="./partials/form.css">
-    <link rel="stylesheet" href="./partials/page-give-classes.css">
+
+    <title>Educanjos | Professores que caem do céu pra ajudar você</title>
+    <link rel="shortcut icon" href="../../public/img/minilogoEducanjos.png" type="image/png">
+    <link rel="stylesheet" href="../../public/css/main.css">
+    <link rel="stylesheet" href="../../public/partials/header.css">
+    <link rel="stylesheet" href="../../public/partials/form.css">
+    <link rel="stylesheet" href="../../public/partials/page-give-classes.css">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&amp;family=Poppins:wght@400;600&amp;display=swap"
         rel="stylesheet">
-    <script src="./scripts/addField.js" defer></script>
+    <script src="../../public/scripts/addField.js" defer></script>
 </head>
 
 <body id="page-give-classes">
     <div id="container">
         <header class="page-header">
             <div class="top-bar-container">
-                <a href="/">
-                    <img src="./img/icons/back.svg" alt="Voltar">
+
+                <a href="./index.html">
+                    <img src="../../public/img/icons/back.svg" alt="Voltar">
                 </a>
-                <img src="./img/logo.svg" alt="Proffy">
             </div>
             <div class="header-content">
                 <strong>Que incrível que você quer dar aulas</strong>
-                <p>O primeiro passo, é preencher esse formulário de inscrição</p>
-
+                <p>O primeiro passo é se cadastrar</p>
             </div>
         </header>
         <main>
@@ -44,6 +45,7 @@
                         <label for="email">E-mail</label>
                         <input name="email" id="email" required>
                     </div> 
+
                     <div class="input-block">
                         <label for="avatar">Link da sua foto <small>(começa com https://) </small></label>
                         <input name="avatar" id="avatar" type="url" required>
@@ -63,13 +65,6 @@
                         <label for="subject">Matéria</label>
                         <select name="subject" id="subject" required>
                             <option value="" selected disabled>Selecione uma opção</option>
-                            {%for subject in subjects %}
-                            <option value="{{loop.index}}">
-                                {{subject}}
-                            </option>
-                            {%endfor%}
-                            <!-- <option value="">Selecione uma opção</option>
-                            <option value="" disabled="" hidden="">Selecione uma opção</option>
                             <option value="1">Artes</option>
                             <option value="2">Biologia</option>
                             <option value="3">Ciências</option>
@@ -79,11 +74,11 @@
                             <option value="7">História</option>
                             <option value="8">Matemática</option>
                             <option value="9">Português</option>
-                            <option value="10">Química</option> -->
+                            <option value="10">Química</option>
                         </select>
                     </div>
                     <div class="input-block">
-                        <label for="cost">Custo da sua hora/aula
+                        <label for="cost">Custo da sua hora/aula (Informe R$ 0,00 caso sua aula seja voluntária)
                             <small>(R$)</small>
                         </label>
                         <input name="cost" type="cost" id="cost" type="number" required>
@@ -98,20 +93,15 @@
                             <label for="weekday">Dia da semana</label>
                             <select name="weekday[]" required>
                                 <option value="" selected disabled>Selecione uma opção</option>
-                                {%for weekday in weekdays%}
-                                <option value="{{loop.index0}}">
-                                    {{weekday}}
-                                </option>
-                                {%endfor%}
-                                <!-- <option value="">Selecione uma opção</option>
                                 <option value="0">Domingo</option>
                                 <option value="1">Segunda-feira</option>
                                 <option value="2">Terça-feira</option>
                                 <option value="3">Quarta-feira</option>
                                 <option value="4">Quinta-feira</option>
                                 <option value="5">Sexta-feira</option>
-                                <option value="6">Sábado</option> -->
+                                <option value="6">Sábado</option>
                             </select>
+                        </div>
                         </div>
                         <div class="input-block">
                             <label for="time_from">Das</label>
@@ -128,7 +118,7 @@
             </form>
             <footer>
                 <p>
-                    <img src="./img/icons/warning.svg" alt="Aviso importante">
+                    <img src="../../public/img/icons/warning.svg" alt="Aviso importante">
                     Importante! <br>
                     Preencha todos dados
                 </p>
