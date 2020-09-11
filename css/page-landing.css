@@ -58,14 +58,26 @@
 .login {
   text-align: center;
   font-size: larger;
-  color: var(--color-text-title);
+  color: var(--color-button-text);
   font-weight: bold;
 }
 
-.login:visited{
+.login a {
   text-decoration:none;
-  color: var(--color-text-title);
+  color: var(--color-button-text);
   }
+.login a:visited {
+  text-decoration:none;
+  color: var(--color-button-text);
+  }
+.login a:hover {
+  text-decoration:none;
+  color: var(--color-primary-lighter);
+  }
+.login a:active {
+  text-decoration:none;
+  color: var(--color-button-text);
+}
 
 .buttons-container a img {
   width: 4rem;
