@@ -1,51 +1,61 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Educanjos | Professores que caem do céu pra ajudar você</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/page-give-classes.css">
+    <link rel="shortcut icon" href="./../img/minilogoEducanjos.png" type="image/png">
+    <link rel="stylesheet" href="./../css/main.css">
+    <link rel="stylesheet" href="./../partials/header.css">
+    <link rel="stylesheet" href="./../partials/form.css">
+    <link rel="stylesheet" href="./../partials/page-give-classes.css">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&amp;family=Poppins:wght@400;600&amp;display=swap"
         rel="stylesheet">
-    <script src="../scripts/addMateria.js" defer></script>
+    <script src="./../scripts/addMateria.js" defer></script>
 </head>
 
 <body id="page-give-classes">
     <div id="container">
         <header class="page-header">
             <div class="top-bar-container">
-                <a href="../index.html">
-                    <img src="../img/icons/back.svg" alt="Voltar">
+                <a href="/">
+                    <img src="./../img/icons/back.svg" alt="Voltar">
                 </a>
             </div>
             <div class="header-content">
                 <strong>Que incrível que você quer aprender</strong>
                 <p>O primeiro passo é se cadastrar</p>
-
             </div>
         </header>
         <main>
-            <form action="study.html" id="create-class" method="POST">
+            <form action="/save-classes" id="create-class" method="POST">
                 <fieldset>
                     <legend>Seus dados</legend>
                     <div class="input-block">
                         <label for="name">Nome completo</label>
                         <input name="name" id="name" required>
-                    </div>                   
+                    </div>
                     <div class="input-block">
                         <label for="email">E-mail</label>
                         <input name="email" id="email" required>
-                    </div> 
+                    </div>
+                    <div class="input-block">
+                        <label for="senha">Senha</label>
+                        <input type="password" name="senha" id="senha" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="senhaConfirmar">Confirmar Senha</label>
+                        <input type="password" name="senhaConfirmar" id="senhaConfirmar" required>
+                    </div>
                     <div class="input-block">
                         <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
                         <input name="whatsapp" id="whatsapp" type="number" required>
-                    </div>                    
+                    </div>
                 </fieldset>
                 <fieldset id="materia-items">
                     <legend>Sobre requisição da aula
@@ -55,23 +65,18 @@
                         <label for="subject">Matéria</label>
                         <select name="subject" id="subject" required>
                             <option value="" selected disabled>Selecione uma opção</option>
-                            <option value="1">Artes</option>
-                            <option value="2">Biologia</option>
-                            <option value="3">Ciências</option>
-                            <option value="4">Educação física</option>
-                            <option value="5">Física</option>
-                            <option value="6">Geografia</option>
-                            <option value="7">História</option>
-                            <option value="8">Matemática</option>
-                            <option value="9">Português</option>
-                            <option value="10">Química</option>
+                            {%for subject in subjects %}
+                            <option value="{{loop.index}}">
+                                {{subject}}
+                            </option>
+                            {%endfor%}
                         </select>
-                    </div>                    
+                    </div>
                 </fieldset>
             </form>
             <footer>
                 <p>
-                    <img src="../img/icons/warning.svg" alt="Aviso importante">
+                    <img src="./../img/icons/warning.svg" alt="Aviso importante">
                     Importante! <br>
                     Preencha todos dados
                 </p>
@@ -80,4 +85,5 @@
         </main>
     </div>
 </body>
+
 </html>

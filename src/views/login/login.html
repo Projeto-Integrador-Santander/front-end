@@ -1,25 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="./../css/main.css">
+    <link rel="stylesheet" href="./../partials/login.css">
     <title>Login Educanjos</title>
+    <link rel="shortcut icon" href="./../img/minilogoEducanjos.png" type="image/png">
 </head>
 
 <body>
     <div class="container">
         <header class="header-logo">
             <div class="logo">
-                <img src="../img/logoEducanjos.jpeg" alt="Proffy">
+                <img src="./../img/logoEducanjos.jpeg" alt="Proffy">
                 <span>Professores que caem do céu pra ajudar você</span>
             </div>
         </header>
 
         <main class="container-login">
-            <form>
+            <form action="{{logar}}" id="login" method="GET">
                 <h1>Fazer login</h1>
                 <div class="inputs">
                     <div class="form-group">
@@ -42,7 +44,7 @@
                             Lembrar-me
                         </label>
                     </div>
-                    <a href="/reset-password">
+                    <a href="/login/esqueci-minha-senha">
                         Esqueci minha senha
                     </a>
                 </div>
@@ -53,14 +55,15 @@
             <footer class="footer">
                 <span>
                     Não tem conta?
-                    <a href="../index.html">Cadastre-se</a>
+                    <a href="{{cadastrar}}">Cadastre-se</a>
                 </span>
                 <span>
                     É de graça
-                    <img src="../img/icons/purple-heart.svg" alt="Coração">
+                    <img src="./../img/icons/purple-heart.svg" alt="Coração">
                 </span>
             </footer>
         </main>
     </div>
 </body>
+
 </html>
