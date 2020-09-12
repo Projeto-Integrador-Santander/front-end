@@ -10,7 +10,7 @@ async function pageStudy(req, res) {
     const filters = req.query
 
     if (!filters.subject || !filters.weekday || !filters.time) {
-        return res.render("study.html", { filters, subjects, weekdays })
+        return res.render("aluno/aulas.html", { filters, subjects, weekdays })
     }
     //horas em minutos
 
@@ -42,7 +42,7 @@ async function pageStudy(req, res) {
             proffy.subject = subjects[proffy.subject - 1]
         })
 
-        return res.render('study.html', { proffys, filters, subjects, weekdays })
+        return res.render('aluno/aulas.html', { proffys, filters, subjects, weekdays })
 
     } catch (error) {
         console.log(error)
@@ -50,7 +50,7 @@ async function pageStudy(req, res) {
 }
 
 async function pageGiveclasses(req, res) {
-    return res.render("give-classes.html", { subjects, weekdays })
+    return res.render("professor/aulas.html", { subjects, weekdays })
 }
 
 async function saveClasses(req, res) {
@@ -83,17 +83,7 @@ async function saveClasses(req, res) {
         queryString += "&weekday=" + req.body.weekday[0]
         queryString += "&time=" + req.body.time_from[0]
 
-        return res.redirect("/study" + queryString)
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-async function pageLogin(req, res) {
-    //caso haja erro na hora da consulta do banco
-    try {
-        return res.render('login.html', { })
-
+        return res.redirect("/aluno/aulas" + queryString)
     } catch (error) {
         console.log(error)
     }
@@ -101,32 +91,36 @@ async function pageLogin(req, res) {
 
 async function paginaLoginEstudante(req, res) {
     const titulo = 'Área do Estudante';
-    const logar = '/logar-estudante';
-    const cadastrar = '/cadastrar-estudante';
-    return res.render('login.html', { titulo, logar, cadastrar })
+    const logar = '/aluno/aulas';
+    const cadastrar = '/aluno/cadastro';
+    return res.render('login/login.html', { titulo, logar, cadastrar })
 }
 
 async function paginaCadastrarEstudante(req, res) {
-    return res.render('aluno.html', { subjects, weekdays })
+    return res.render('aluno/cadastro.html', { subjects, weekdays })
 }
 
 async function logarEstudante(req, res) {
-    return res.redirect("/study")
+    return res.redirect("/aluno/aulas")
 }
 
 async function paginaLoginProfessor(req, res) {
     const titulo = 'Área do Professor';
-    const logar = '/logar-professor';
-    const cadastrar = '/cadastrar-professor';
-    return res.render('login.html', { titulo, logar, cadastrar })
+    const logar = '/professor/aulas';
+    const cadastrar = '/professor/cadastrar';
+    return res.render('login/login.html', { titulo, logar, cadastrar })
 }
 
 async function logarProfessor(req, res) {
-    return res.redirect("/give-classes")
+    return res.redirect("/professor/aulas")
 }
 
 async function paginaCadastrarProfessor(req, res) {
-    return res.render('professor/cadastro.html', { })
+    return res.render('professor/cadastro.html', {})
+}
+
+async function paginaEsqueciMinhaSenha(req, res) {
+    return res.render('login/esqueci-minha-senha.html', {})
 }
 
 
@@ -135,7 +129,6 @@ module.exports = {
     pageStudy,
     pageGiveclasses,
     saveClasses,
-    pageLogin,
 
     paginaLoginEstudante,
     paginaCadastrarEstudante,
@@ -143,5 +136,7 @@ module.exports = {
 
     paginaLoginProfessor,
     logarProfessor,
-    paginaCadastrarProfessor
+    paginaCadastrarProfessor,
+
+    paginaEsqueciMinhaSenha
 }
