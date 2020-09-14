@@ -1,0 +1,107 @@
+<div class="page-give-classes">
+  <div class="container">
+    <header class="page-header">
+      <div class="top-bar-container">
+        <a [routerLink]="['/professor/login']" routerLinkActive="router-link-active">
+          <img src="assets/img/icons/back.svg" alt="Voltar">
+        </a>
+        <a class="btn-atualizar" (click)="atualizarDados()">Atualizar
+          cadastro</a>
+      </div>
+      <div class="header-content">
+        <strong>Seja bem-vindo, {{professor.nome}}</strong>
+        <p>Sua área para manutenção de aulas.</p>
+      </div>
+    </header>
+    <main>
+      <form [formGroup]="form">
+        <fieldset>
+          <legend>Agenda de Aulas</legend>
+          <div class="select-block">
+            <label for="weekday">Dia da semana</label>
+            <select name="weekday" (change)="preencherAgenda($event.target.value)" formControlName="diaSemana" required>
+              <option value="0" selected disabled>Selecione uma opção</option>
+              <option *ngFor="let semana of listaSemana" [value]="semana.id">{{semana.nome}}</option>
+            </select>
+          </div>
+
+          <div *ngIf="listaProfessorAgenda.length && listaProfessorAgenda.length > 0"
+            style="width: 100%; margin: 20px 0;">
+            <table mat-table [dataSource]="listaProfessorAgenda" class="mat-elevation-z8" style="width: 100%;">
+              <ng-container matColumnDef="nomeMateria">
+                <th mat-header-cell *matHeaderCellDef> Matéria </th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeMateria}} </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef> Valor </th>
+                <td mat-cell *matCellDef="let element"> {{element.indVoluntario ? '--' : element.valor}} </td>
+              </ng-container>
+              <ng-container matColumnDef="horarioInicio">
+                <th mat-header-cell *matHeaderCellDef> Horário Início </th>
+                <td mat-cell *matCellDef="let element"> {{element.horarioInicio}} </td>
+              </ng-container>
+              <ng-container matColumnDef="horarioFim">
+                <th mat-header-cell *matHeaderCellDef> Horário Término </th>
+                <td mat-cell *matCellDef="let element"> {{element.horarioFim}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="opcao">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-mini-fab color="warn" aria-label="Excluir horário da agenda"
+                    (click)="removerAgenda(element.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="nomeColunas"></tr>
+              <tr mat-row *matRowDef="let row; columns: nomeColunas;"></tr>
+            </table>
+          </div>
+        </fieldset>
+        <fieldset id="schedule-items">
+          <legend>Matéria/Horário</legend>
+          <div class="select-block">
+            <label for="materia">Matéria</label>
+            <select name="materia" id="materia" formControlName="idMateria" required>
+              <option value="0" selected disabled>Selecione uma opção</option>
+              <option *ngFor="let materia of listaMateria" [value]="materia.id">
+                {{materia.nome}}
+              </option>
+            </select>
+          </div>
+          <div style="margin: 20px 0;">
+            <mat-slide-toggle formControlName="indVoluntario">Voluntário</mat-slide-toggle>
+          </div>
+          <div *ngIf="!form.controls.indVoluntario.value" class="input-block">
+            <label for="valor">Custo da sua hora/aula
+              <small>(R$)</small>
+            </label>
+            <input name="valor" type="valor" id="valor" formControlName="valor" type="number" required>
+          </div>
+          <div class="schedule-item">
+            <div class="input-block">
+              <label for="horarioInicio">Das</label>
+              <input type="time" id="horarioInicio" name="horarioInicio" formControlName="horarioInicio">
+            </div>
+
+            <div class="input-block">
+              <label for="horarioFim">Até</label>
+              <input type="time" id="horarioFim" name="horarioFim" formControlName="horarioFim">
+            </div>
+          </div>
+        </fieldset>
+        <footer>
+          <p>
+            <img src="assets/img/icons/warning.svg" alt="Aviso importante">
+            Importante! <br>
+            Preencha todos dados
+          </p>
+          <button type="button" (click)="incluirAgenda()">Salvar cadastro</button>
+        </footer>
+      </form>
+    </main>
+  </div>
+</div>

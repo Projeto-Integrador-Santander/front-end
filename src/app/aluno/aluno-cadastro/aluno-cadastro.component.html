@@ -1,0 +1,72 @@
+<div class="page-give-classes">
+  <div class="container">
+    <header class="page-header">
+      <div class="top-bar-container">
+        <a [routerLink]="['/aluno/login']" routerLinkActive="router-link-active">
+          <img src="assets/img/icons/back.svg" alt="Voltar">
+        </a>
+        <a *ngIf="aluno.id" class="btn-atualizar" (click)="voltarAula()">Voltar</a>
+      </div>
+      <div class="header-content">
+        <strong>Seja bem-vindo, {{aluno.nome}}</strong>
+        <strong>Que incrível que você quer aprender</strong>
+        <p>O primeiro passo é se cadastrar</p>
+      </div>
+    </header>
+    <main>
+      <form [formGroup]="form" (ngSubmit)="gravar()">
+        <fieldset>
+          <legend>Seus dados</legend>
+          <div class="input-block">
+            <label for="nome">Nome completo</label>
+            <input name="nome" id="nome" formControlName="nome" required>
+          </div>
+          <div class="input-block">
+            <label for="email">E-mail</label>
+            <input name="email" id="email" formControlName="email" required>
+          </div>
+          <div class="input-block">
+            <label for="senha">Senha</label>
+            <input type="password" name="senha" id="senha" formControlName="senha" required>
+          </div>
+          <div class="input-block">
+            <label for="senhaConfirmar">Confirmar Senha</label>
+            <input type="password" name="senhaConfirmar" id="senhaConfirmar" formControlName="senhaConfirmar" required>
+          </div>
+          <div class="input-block">
+            <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
+            <input name="whatsapp" id="whatsapp" type="number" formControlName="whatsapp" required>
+          </div>
+        </fieldset>
+        <fieldset id="materia-items">
+          <legend>Matérias para requisição da aula
+            <button type="button" id="add-materia" (click)="incluirMateria(0)"> + Nova Matéria</button>
+          </legend>
+          <ng-container formArrayName="materias" *ngFor="let control of materias.controls; index as i">
+            <ng-container [formGroupName]="i">
+
+              <div class="select-block">
+                <label for="materia">Matéria</label>
+                <select name="materia" id="materia" formControlName="idMateria" required>
+                  <option value="0" selected disabled>Selecione uma opção</option>
+                  <option *ngFor="let matricula of listaMatricula" [value]="matricula.id">
+                    {{matricula.nome}}
+                  </option>
+                </select>
+              </div>
+            </ng-container>
+
+          </ng-container>
+        </fieldset>
+        <footer>
+          <p>
+            <img src="assets/img/icons/warning.svg" alt="Aviso importante">
+            Importante! <br>
+            Preencha todos dados
+          </p>
+          <button type="submit">Salvar cadastro</button>
+        </footer>
+      </form>
+    </main>
+  </div>
+</div>

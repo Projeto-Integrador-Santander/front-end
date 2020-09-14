@@ -1,0 +1,63 @@
+<div class="page-give-classes">
+  <div class="container">
+    <header class="page-header">
+      <div class="top-bar-container">
+        <a [routerLink]="['/professor/login']" routerLinkActive="router-link-active">
+          <img src="assets/img/icons/back.svg" alt="Voltar">
+        </a>
+        <a *ngIf="professor.id" class="btn-atualizar" (click)="voltarAula()">Voltar</a>
+      </div>
+      <div class="header-content">
+        <strong>Que incrível que você quer dar aulas</strong>
+        <p>O primeiro passo, é preencher esse formulário de inscrição</p>
+      </div>
+    </header>
+    <main>
+      <form [formGroup]="form" (ngSubmit)="gravar()">
+        <fieldset>
+          <legend>Seus dados</legend>
+          <div class="input-block">
+            <label for="nome">Nome completo</label>
+            <input name="nome" id="nome" formControlName="nome">
+          </div>
+          <ng-container *ngIf="!professor.id">
+            <div class="input-block">
+              <label for="email">E-mail</label>
+              <input name="email" id="email" formControlName="email">
+            </div>
+
+            <div class="input-block">
+              <label for="senha">Senha</label>
+              <input type="password" name="senha" id="senha" formControlName="senha">
+            </div>
+            <div class="input-block">
+              <label for="senhaConfirmar">Confirmar Senha</label>
+              <input type="password" name="senhaConfirmar" id="senhaConfirmar" formControlName="senhaConfirmar">
+            </div>
+          </ng-container>
+
+          <div class="input-block">
+            <label for="avatar">Link da sua foto <small>(começa com https://) </small></label>
+            <input name="avatar" id="avatar" type="url" formControlName="avatar">
+          </div>
+          <div class="input-block">
+            <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
+            <input name="whatsapp" id="whatsapp" type="number" formControlName="whatsapp">
+          </div>
+          <div class="textarea-block">
+            <label for="biografia">Biografia</label>
+            <textarea name="biografia" id="biografia" formControlName="biografia"></textarea>
+          </div>
+        </fieldset>
+        <footer>
+          <p>
+            <img src="assets/img/icons/warning.svg" alt="Aviso importante">
+            Importante! <br>
+            Preencha todos dados
+          </p>
+          <button type="submit">Salvar cadastro</button>
+        </footer>
+      </form>
+    </main>
+  </div>
+</div>

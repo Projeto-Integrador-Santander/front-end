@@ -1,0 +1,53 @@
+<div class="container">
+  <header class="header-logo">
+    <div class="logo">
+      <img src="assets/img/logoEducanjos.jpeg" alt="educanjos" [routerLink]="['/']"
+        routerLinkActive="router-link-active">
+      <span>Professores que caem do céu pra ajudar você</span>
+    </div>
+  </header>
+
+  <main class="container-login">
+    <form [formGroup]="form" (ngSubmit)="entrar()">
+      <h1>Fazer login</h1>
+      <div class="inputs">
+        <div class="form-group">
+          <label class="Active" for="email">E-mail</label>
+          <div class="input">
+            <input type="email" name="email" id="email" formControlName="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="Active" for="senha">Senha</label>
+          <div class="input">
+            <input type="password" name="senha" id="senha" formControlName="senha">
+          </div>
+        </div>
+      </div>
+      <div class="login-options">
+        <div class="form-ckeck">
+          <label for="yes">
+            <input class="check" type="checkbox" id="yes" value="yes">
+            Lembrar-me
+          </label>
+        </div>
+        <a [routerLink]="urlEsqueciMinhaSenha" routerLinkActive="router-link-active">
+          Esqueci minha senha
+        </a>
+      </div>
+      <button class="submit-button" type="submit">
+        Entrar
+      </button>
+    </form>
+    <footer class="footer">
+      <span>
+        Não tem conta?
+        <a (click)="enviarCadastro()">Cadastre-se</a>
+      </span>
+      <span>
+        É de graça
+        <img src="assets/img/icons/purple-heart.svg" alt="Coração">
+      </span>
+    </footer>
+  </main>
+</div>

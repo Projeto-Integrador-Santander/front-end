@@ -1,0 +1,74 @@
+<div class="page-study">
+  <div class="container">
+    <header class="page-header">
+
+      <div class="top-bar-container">
+        <a [routerLink]="['/aluno/login']" routerLinkActive="router-link-active">
+          <img src="assets/img/icons/back.svg" alt="Voltar">
+        </a>
+        <a class="btn-atualizar" (click)="atualizarDados()">Atualizar
+          cadastro</a>
+      </div>
+      <div class="header-content">
+        <strong>Esses são os educanjos disponíveis</strong>
+        <form class="search-teachers" [formGroup]="form" (ngSubmit)="filtrarProfessorAgenda()">
+          <div class="select-block">
+            <label for="idMateria">Matéria</label>
+            <select name="idMateria" id="idMateria" formControlName="idMateria">
+              <option value="0" selected>Todas as matérias</option>
+              <option *ngFor="let materia of listaMateria" [value]="materia.id">
+                {{materia.nome}}
+              </option>
+            </select>
+          </div>
+          <div class="select-block">
+            <label for="diaSemana">Dia da semana</label>
+            <select name="diaSemana" id="diaSemana" formControlName="diaSemana">
+              <option value="0" selected>Todos os dias</option>
+              <option *ngFor="let semana of listaSemana" [value]="semana.id">
+                {{semana.nome}}
+              </option>
+            </select>
+          </div>
+          <button type="submit">Filtrar</button>
+        </form>
+      </div>
+    </header>
+    <main>
+      <ng-container *ngIf="listaProfessor?.length > 0; else semProfessores">
+
+        <article *ngFor="let professor of listaProfessor" class="teacher-item">
+          <header>
+            <img src="{{professor.avatar}}" alt="{{professor.nome}}">
+            <div>
+              <strong>{{professor.nome}}</strong>
+
+              <span>
+                {{obterMateria(professor)}}
+              </span>
+            </div>
+          </header>
+
+          <p>{{professor.biografia}}</p>
+
+          <p>Disponibilidades</p>
+
+          <app-aluno-aula-detalhe [professor]="professor" [listaDiaSemana]="listaSemana" [listaMaterias]="listaMateria">
+          </app-aluno-aula-detalhe>
+
+          <footer>
+            <!-- <p>Preço/hora<strong>R$ {{proffy.cost}}</strong> </p> -->
+            <button type="button">
+              <img src="assets/img/icons/whatsapp.svg" alt="Whatsapp">Entrar em contato
+            </button>
+          </footer>
+        </article>
+
+      </ng-container>
+      <ng-template #semProfessores>
+        <p class="no-results">Nenhum professor encontrado com a sua pesquisa.</p>
+      </ng-template>
+
+    </main>
+  </div>
+</div>
