@@ -136,7 +136,12 @@ export class ProfessorService {
       return professor;
     });
 
-    return of(lista);
+    if (lista ?.length > 0) {
+      return of([...lista]);
+    } else {
+      return of([]);
+    }
+
 
   }
 }

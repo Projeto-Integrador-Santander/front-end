@@ -17,6 +17,7 @@ export class AlunoAulaDetalheComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.tabs = [] as AgendaSemana[];
     let listaDiaSemana = this.professor.agendas.map((agenda) => agenda.diaSemana);
     listaDiaSemana = listaDiaSemana.sort((a, b) => a - b);
 

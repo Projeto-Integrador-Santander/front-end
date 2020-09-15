@@ -21,6 +21,7 @@ import { EsqueciMinhaSenhaComponent } from './login/esqueci-minha-senha/esqueci-
 import { AlunoCadastroComponent } from './aluno/aluno-cadastro/aluno-cadastro.component';
 import { AlunoAulaComponent } from './aluno/aluno-aula/aluno-aula.component';
 import { AlunoAulaDetalheComponent } from './aluno/aluno-aula/aluno-aula-detalhe/aluno-aula-detalhe.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AlunoAulaDetalheComponent } from './aluno/aluno-aula/aluno-aula-detalhe
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -21,6 +21,7 @@ export class AlunoAulaComponent implements OnInit {
   listaProfessor = [] as Professor[];
   aluno = {} as Aluno;
   form = new FormGroup({});
+  loading = false;
 
   constructor(private fb: FormBuilder, private comumService: ComumService, private alunoService: AlunoService,
     private professorService: ProfessorService, private route: ActivatedRoute, private router: Router) { }
@@ -60,18 +61,24 @@ export class AlunoAulaComponent implements OnInit {
 
   filtrarProfessorAgenda(): void {
 
+    this.loading = true;
     const listaMatriculaAluno = +this.form.controls.idMateria.value ?
       [+this.form.controls.idMateria.value] : this.listaMateria.map((materia) => materia.id);
-
+    this.listaProfessor = [];
     this.professorService.listarProfessorAgenda({
       idsMateria: listaMatriculaAluno,
       diaSemana: +this.form.controls.diaSemana.value,
     }).subscribe((professores) => {
-      if (professores ?.length > 0) {
-        this.listaProfessor = [...professores];
-      } else {
-        this.listaProfessor = [];
-      }
+
+      setTimeout(() => {
+        if (professores ?.length > 0) {
+          this.listaProfessor = [...professores];
+        } else {
+          this.listaProfessor = [];
+        }
+        this.loading = false;
+      }, 500);
+
     });
   }
 

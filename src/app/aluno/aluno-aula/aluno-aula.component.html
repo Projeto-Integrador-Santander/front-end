@@ -35,7 +35,7 @@
       </div>
     </header>
     <main>
-      <ng-container *ngIf="listaProfessor?.length > 0; else semProfessores">
+      <ng-container *ngIf="listaProfessor?.length > 0 && !loading; else semProfessores">
 
         <article *ngFor="let professor of listaProfessor" class="teacher-item">
           <header>
@@ -66,9 +66,11 @@
 
       </ng-container>
       <ng-template #semProfessores>
-        <p class="no-results">Nenhum professor encontrado com a sua pesquisa.</p>
+        <div *ngIf="loading" style="width: 100%; display: flex; align-items: center; justify-content: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <p *ngIf="!loading" class="no-results">Nenhum professor encontrado com a sua pesquisa.</p>
       </ng-template>
-
     </main>
   </div>
 </div>
