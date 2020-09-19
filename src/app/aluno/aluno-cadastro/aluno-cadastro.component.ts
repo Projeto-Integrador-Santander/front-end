@@ -34,6 +34,8 @@ export class AlunoCadastroComponent implements OnInit {
         this.form = this.fb.group({
           id: [this.aluno.id],
           nome: [this.aluno.nome, Validators.required],
+          sobrenome: [this.aluno.sobrenome, Validators.required],
+          cpf: [this.aluno.cpf],
           email: [this.aluno.email, Validators.required],
           senha: [this.aluno.senha, Validators.required],
           senhaConfirmar: [this.aluno.senha, Validators.required],
@@ -76,6 +78,15 @@ export class AlunoCadastroComponent implements OnInit {
 
     if (!this.aluno.nome) {
       alert('Informe o seu nome.');
+      return;
+    }
+    if (!this.aluno.sobrenome) {
+      alert('Informe o seu sobrenome.');
+      return;
+    }
+
+    if (!this.aluno.cpf) {
+      alert('Informe o seu CPF.');
       return;
     }
 

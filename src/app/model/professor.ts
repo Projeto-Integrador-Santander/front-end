@@ -1,6 +1,8 @@
 export interface Professor {
   id: number;
   nome: string;
+  sobrenome: string;
+  cpf: string;
   email: string;
   senha: string;
   avatar: string;

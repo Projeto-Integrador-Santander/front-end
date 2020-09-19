@@ -27,6 +27,8 @@ export class ProfessorCadastroComponent implements OnInit {
       this.form = this.fb.group({
         id: [this.professor.id],
         nome: [this.professor.nome, Validators.required],
+        sobrenome: [this.professor.sobrenome, Validators.required],
+        cpf: [this.professor.cpf],
         email: [this.professor.email, Validators.required],
         senha: [this.professor.senha, Validators.required],
         senhaConfirmar: [this.professor.senha, Validators.required],
@@ -50,6 +52,15 @@ export class ProfessorCadastroComponent implements OnInit {
       alert('Informe o seu nome.');
       return;
     }
+    if (!this.professor.sobrenome) {
+      alert('Informe o seu Sobrenome.');
+      return;
+    }
+
+    if (!this.professor.cpf) {
+      alert('Informe seu CPF');
+      return;
+      }
 
     if (!this.professor.email) {
       alert('Informe o seu e-mail.');
