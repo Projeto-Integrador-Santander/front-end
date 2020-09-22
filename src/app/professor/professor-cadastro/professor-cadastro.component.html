@@ -26,7 +26,7 @@
           </div>
           <div class="input-block">
             <label for="nome">CPF</label>
-            <input name="cpf" id="cpf" formControlName="cpf">
+            <input name="cpf" mask="000.000.000-00" id="cpf" formControlName="cpf">
           </div>
           <ng-container *ngIf="!professor.id">
             <div class="input-block">
@@ -50,7 +50,7 @@
           </div>
           <div class="input-block">
             <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
-            <input name="whatsapp" id="whatsapp" type="number" formControlName="whatsapp">
+            <input name="whatsapp" mask="(00) 00000-0000" id="whatsapp" formControlName="whatsapp">
           </div>
           <div class="textarea-block">
             <label for="biografia">Biografia</label>

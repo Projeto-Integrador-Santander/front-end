@@ -22,7 +22,8 @@ import { AlunoCadastroComponent } from './aluno/aluno-cadastro/aluno-cadastro.co
 import { AlunoAulaComponent } from './aluno/aluno-aula/aluno-aula.component';
 import { AlunoAulaDetalheComponent } from './aluno/aluno-aula/aluno-aula-detalhe/aluno-aula-detalhe.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatIconModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
