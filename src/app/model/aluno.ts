@@ -1,16 +1,23 @@
 export interface Aluno {
   id: number;
+  login: AlunoLogin;
+  materias: AlunoMateria[];
+  perfil: AlunoPerfil;
+}
+
+export interface AlunoLogin {
+  email: string;
+  senha: string;
+}
+
+export interface AlunoPerfil {
   nome: string;
   sobrenome: string;
   cpf: string;
-  email: string;
-  senha: string;
-  whatsapp: string;
-  materias: AlunoMateria[];
+  numero_whatsapp: string;
 }
 
 export interface AlunoMateria {
-  idAluno: number;
-  idMateria: number;
+  id: number;
 }
 

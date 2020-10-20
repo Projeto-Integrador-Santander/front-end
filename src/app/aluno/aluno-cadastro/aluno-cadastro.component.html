@@ -8,7 +8,7 @@
         <a *ngIf="aluno.id" class="btn-atualizar" (click)="voltarAula()">Voltar</a>
       </div>
       <div class="header-content">
-        <strong>Seja bem-vindo, {{aluno.nome}}</strong>
+        <strong>Seja bem-vindo, {{aluno.perfil.nome}}</strong>
         <strong>Que incrível que você quer aprender</strong>
         <p>O primeiro passo é se cadastrar</p>
       </div>
@@ -17,6 +17,7 @@
       <form [formGroup]="form" (ngSubmit)="gravar()">
         <fieldset>
           <legend>Seus dados</legend>
+          <ng-container formGroupName="perfil">
           <div class="input-block">
             <label for="nome">Nome</label>
             <input name="nome" id="nome" formControlName="nome" required>
@@ -30,6 +31,13 @@
             <input name="cpf" mask="000.000.000-00" id="cpf" formControlName="cpf" required>
           </div>
           <div class="input-block">
+            <label for="numero_whatsapp">Whatsapp <small>(somente números) </small></label>
+            <input name="numero_whatsapp" mask="(00) 00000-0000" id="numero_whatsapp" formControlName="numero_whatsapp" required>
+          </div>
+        </ng-container>
+
+        <ng-container formGroupName="login">
+          <div class="input-block">
             <label for="email">E-mail</label>
             <input name="email" id="email" formControlName="email" required>
           </div>
@@ -41,10 +49,7 @@
             <label for="senhaConfirmar">Confirmar Senha</label>
             <input type="password" name="senhaConfirmar" id="senhaConfirmar" formControlName="senhaConfirmar" required>
           </div>
-          <div class="input-block">
-            <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
-            <input name="whatsapp" mask="(00) 00000-0000" id="whatsapp" formControlName="whatsapp" required>
-          </div>
+        </ng-container>
         </fieldset>
         <fieldset id="materia-items">
           <legend>Matérias para requisição da aula
@@ -55,7 +60,7 @@
 
               <div class="select-block">
                 <label for="materia">Matéria</label>
-                <select name="materia" id="materia" formControlName="idMateria" required>
+                <select name="materia" id="materia" formControlName="id" required>
                   <option value="0" selected disabled>Selecione uma opção</option>
                   <option *ngFor="let matricula of listaMatricula" [value]="matricula.id">
                     {{matricula.nome}}

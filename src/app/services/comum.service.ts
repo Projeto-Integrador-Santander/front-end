@@ -1,7 +1,9 @@
 import { Base } from './../model/base';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,20 +14,17 @@ export class ComumService {
 
   listarMateria(): Observable<Base[]> {
 
-    const lista = [] as Base[];
-    lista.push(
-      { id: 1, nome: 'Artes', },
-      { id: 2, nome: 'Biologia', },
-      { id: 3, nome: 'Educação física', },
-      { id: 4, nome: 'Física', },
-      { id: 5, nome: 'Geografia', },
-      { id: 6, nome: 'História', },
-      { id: 7, nome: 'Matemática', },
-      { id: 8, nome: 'Português', },
-      { id: 9, nome: 'Química', },
+    return this.http.get<any[]>(`${environment.urlApi}materia/v1`)
+    .pipe(
+      map((lista) => {
+        return lista.map((materia) => {
+          return {
+            id: materia.id,
+            nome: materia.materia
+          } as Base;
+        });
+      })
     );
-
-    return of(lista);
   }
 
   listarSemana(): Observable<Base[]> {
