@@ -39,7 +39,7 @@
         <ng-container formGroupName="login">
           <div class="input-block">
             <label for="email">E-mail</label>
-            <input name="email" id="email" formControlName="email" required>
+            <input name="email" id="email" [attr.disabled]="aluno?.id" formControlName="email" required>
           </div>
           <div class="input-block">
             <label for="senha">Senha</label>

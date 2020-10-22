@@ -16,7 +16,24 @@ export class ProfessorCadastroComponent implements OnInit {
   professor = {} as Professor;
 
   constructor(private fb: FormBuilder, private professorService: ProfessorService, private router: Router,
-    private route: ActivatedRoute, private _location: Location) { }
+    private route: ActivatedRoute, private _location: Location) { 
+      this.form = this.fb.group({
+        id: 0,
+        perfil: this.fb.group({
+          nome: '',
+          sobrenome: '',
+          cpf: '',
+          numero_whatsapp: '',
+          url_foto: '',
+          sobre: ''
+        }),
+        login: this.fb.group({
+          email: '',
+          senha: '',
+          senhaConfirmar: '',
+        })
+      });
+    }
 
   ngOnInit(): void {
 
@@ -26,74 +43,84 @@ export class ProfessorCadastroComponent implements OnInit {
       this.professor = professor;
       this.form = this.fb.group({
         id: [this.professor.id],
-        nome: [this.professor.nome, Validators.required],
-        sobrenome: [this.professor.sobrenome, Validators.required],
-        cpf: [this.professor.cpf],
-        email: [this.professor.email, Validators.required],
-        senha: [this.professor.senha, Validators.required],
-        senhaConfirmar: [this.professor.senha, Validators.required],
-        avatar: [this.professor.avatar, Validators.required],
-        whatsapp: [this.professor.whatsapp, Validators.required],
-        biografia: [this.professor.biografia, Validators.required]
+        perfil: this.fb.group({
+          nome: [this.professor.perfil.nome, Validators.required],
+          sobrenome: [this.professor.perfil.sobrenome, Validators.required],
+          cpf: [this.professor.perfil.cpf],
+          numero_whatsapp: [this.professor.perfil.numero_whatsapp, Validators.required],
+          url_foto: [this.professor.perfil.url_foto, Validators.required],
+          sobre: [this.professor.perfil.sobre, Validators.required],
+        }),
+        login: this.fb.group({
+          id: [this.professor.login.id, Validators.required],
+          email: [this.professor.login.email, Validators.required],
+          senha: [this.professor.login.senha, Validators.required],
+          senhaConfirmar: [this.professor.login.senha, Validators.required],
+        })
       });
+
+      if (id) {
+        const loginForm = this.form.controls.login as FormGroup;
+        loginForm.controls.email.disable();
+      }
     },
       (erro) => {
         alert(erro.error);
       }
     );
-
-
   }
 
   gravar(): void {
     this.professor = this.form.value;
 
-    if (!this.professor.nome) {
+    if (!this.professor.perfil.nome) {
       alert('Informe o seu nome.');
       return;
     }
-    if (!this.professor.sobrenome) {
+    if (!this.professor.perfil.sobrenome) {
       alert('Informe o seu Sobrenome.');
       return;
     }
 
-    if (!this.professor.cpf) {
+    if (!this.professor.perfil.cpf) {
       alert('Informe seu CPF');
       return;
       }
 
-    if (!this.professor.email) {
-      alert('Informe o seu e-mail.');
-      return;
-    }
-
-    if (!this.professor.senha) {
-      alert('Informe a sua senha.');
-      return;
-    }
-
-    if (!this.form.controls.senhaConfirmar.value) {
-      alert('Informe a senha de confirmação.');
-      return;
-    }
-
-    if (this.professor.senha !== this.form.controls.senhaConfirmar.value) {
-      alert('Senhas estão diferentes.');
-      return;
-    }
-
-    if (!this.professor.avatar) {
+    if (!this.professor.perfil.url_foto) {
       alert('Informe o seu avatar.');
       return;
     }
 
-    if (!this.professor.whatsapp) {
+    if (!this.professor.perfil.numero_whatsapp) {
       alert('Informe o seu whatsapp.');
       return;
     }
 
-    if (!this.professor.biografia) {
+    if (!this.professor.perfil.sobre) {
       alert('Informe a sua biografia.');
+      return;
+    }
+
+    if (!this.professor.id && !this.professor.login.email) {
+      alert('Informe o seu e-mail.');
+      return;
+    }
+
+    if (!this.professor.login.senha) {
+      alert('Informe a sua senha.');
+      return;
+    }
+
+    const login = this.form.controls.login as FormGroup;
+
+    if (!login.controls.senhaConfirmar.value) {
+      alert('Informe a senha de confirmação.');
+      return;
+    }
+
+    if (this.professor.login.senha !== login.controls.senhaConfirmar.value) {
+      alert('Senhas estão diferentes.');
       return;
     }
 
@@ -107,7 +134,7 @@ export class ProfessorCadastroComponent implements OnInit {
       );
     } else {
       this.professorService.alterar(this.professor).subscribe((professor) => {
-        this.router.navigateByUrl(`/professor/aula/${this.professor.id}`);
+        this.router.navigateByUrl(`/professor/aula/${this.professor.login.id}`);
       },
         (error) => {
           alert(error.error);

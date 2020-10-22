@@ -16,22 +16,37 @@
       <form [formGroup]="form" (ngSubmit)="gravar()">
         <fieldset>
           <legend>Seus dados</legend>
-          <div class="input-block">
-            <label for="nome">Nome</label>
-            <input name="nome" id="nome" formControlName="nome">
-          </div>
-          <div class="input-block">
-            <label for="sobrenome">Sobrenome</label>
-            <input name="sobrenome" id="sobrenome" formControlName="sobrenome">
-          </div>
-          <div class="input-block">
-            <label for="nome">CPF</label>
-            <input name="cpf" mask="000.000.000-00" id="cpf" formControlName="cpf">
-          </div>
-          <ng-container *ngIf="!professor.id">
+          <ng-container formGroupName="perfil">
+            <div class="input-block">
+              <label for="nome">Nome</label>
+              <input name="nome" id="nome" formControlName="nome">
+            </div>
+            <div class="input-block">
+              <label for="sobrenome">Sobrenome</label>
+              <input name="sobrenome" id="sobrenome" formControlName="sobrenome">
+            </div>
+            <div class="input-block">
+              <label for="nome">CPF</label>
+              <input name="cpf" mask="000.000.000-00" id="cpf" formControlName="cpf">
+            </div>
+            <div class="input-block">
+              <label for="url_foto">Link da sua foto <small>(começa com https://) </small></label>
+              <input name="url_foto" id="url_foto" type="url" formControlName="url_foto">
+            </div>
+            <div class="input-block">
+              <label for="numero_whatsapp">Whatsapp <small>(somente números) </small></label>
+              <input name="numero_whatsapp" mask="(00) 00000-0000" id="numero_whatsapp"
+                formControlName="numero_whatsapp">
+            </div>
+            <div class="textarea-block">
+              <label for="sobre">Biografia</label>
+              <textarea name="sobre" id="sobre" formControlName="sobre"></textarea>
+            </div>
+          </ng-container>
+          <ng-container formGroupName="login">
             <div class="input-block">
               <label for="email">E-mail</label>
-              <input name="email" id="email" formControlName="email">
+              <input name="email" id="email" [attr.disabled]="professor?.id" formControlName="email">
             </div>
 
             <div class="input-block">
@@ -43,19 +58,6 @@
               <input type="password" name="senhaConfirmar" id="senhaConfirmar" formControlName="senhaConfirmar">
             </div>
           </ng-container>
-
-          <div class="input-block">
-            <label for="avatar">Link da sua foto <small>(começa com https://) </small></label>
-            <input name="avatar" id="avatar" type="url" formControlName="avatar">
-          </div>
-          <div class="input-block">
-            <label for="whatsapp">Whatsapp <small>(somente números) </small></label>
-            <input name="whatsapp" mask="(00) 00000-0000" id="whatsapp" formControlName="whatsapp">
-          </div>
-          <div class="textarea-block">
-            <label for="biografia">Biografia</label>
-            <textarea name="biografia" id="biografia" formControlName="biografia"></textarea>
-          </div>
         </fieldset>
         <footer>
           <p>

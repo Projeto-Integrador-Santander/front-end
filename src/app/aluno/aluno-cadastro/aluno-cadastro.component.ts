@@ -48,14 +48,6 @@ export class AlunoCadastroComponent implements OnInit {
         this.listaMatricula = response[0];
         this.aluno = response[1];
 
-        if (!this.aluno?.perfil) {
-          this.aluno = {
-            login: {},
-            perfil: {},
-            materias: []
-          } as Aluno;
-        }
-
         this.form = this.fb.group({
           id: [this.aluno.id],
           perfil: this.fb.group({
@@ -73,7 +65,7 @@ export class AlunoCadastroComponent implements OnInit {
           materias: this.fb.array([])
         });
 
-        if (this.aluno.id) {
+        if (id) {
           const loginForm = this.form.controls.login as FormGroup;
           loginForm.controls.email.disable();
         }

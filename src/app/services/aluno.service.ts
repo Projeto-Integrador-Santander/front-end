@@ -2,7 +2,7 @@ import { Login } from './../model/login';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Aluno, AlunoMateria } from './../model/aluno';
+import { Aluno } from './../model/aluno';
 import { Injectable } from '@angular/core';
 
 @Injectable({

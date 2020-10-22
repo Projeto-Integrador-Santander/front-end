@@ -17,7 +17,7 @@ export class AlunoAulaDetalheComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.tabs = [] as AgendaSemana[];
+  /*  this.tabs = [] as AgendaSemana[];
     let listaDiaSemana = this.professor.agendas.map((agenda) => agenda.diaSemana);
     listaDiaSemana = listaDiaSemana.sort((a, b) => a - b);
 
@@ -32,18 +32,19 @@ export class AlunoAulaDetalheComponent implements OnInit {
       }
     }
 
-    for (const diaSemana of this.tabs) {
-      const listaAgendaDia = this.professor.agendas.filter(x => x.diaSemana === diaSemana.idDiaSemana);
+    // for (const diaSemana of this.tabs) {
+    //   const listaAgendaDia = this.professor.agendas.filter(x => x.diaSemana === diaSemana.idDiaSemana);
 
-      diaSemana.horarios = listaAgendaDia.map((agenda) => {
-        return {
-          horarioInicio: agenda.horarioInicio,
-          horarioFim: agenda.horarioFim,
-          nomeMateria: this.listaMaterias.find(x => x.id === agenda.idMateria).nome,
-          valor: agenda.valor
-        } as AgendaSemanaHorario;
-      });
-    }
+    //   diaSemana.horarios = listaAgendaDia.map((agenda) => {
+    //     return {
+    //       horarioInicio: agenda.horarioInicio,
+    //       horarioFim: agenda.horarioFim,
+    //       nomeMateria: this.listaMaterias.find(x => x.id === agenda.idMateria).nome,
+    //       valor: agenda.valor
+    //     } as AgendaSemanaHorario;
+    //   });
+    // }
+    */
   }
 
   obterHorarioDiaSemana(index: any): void {

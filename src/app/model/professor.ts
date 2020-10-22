@@ -1,14 +1,27 @@
 export interface Professor {
   id: number;
+  login: ProfessorLogin;
+  materias: ProfessorMateria[];
+  perfil: ProfessorPerfil;
+}
+
+export interface ProfessorLogin {
+  id: number;
+  email: string;
+  senha: string;
+}
+
+export interface ProfessorPerfil {
   nome: string;
   sobrenome: string;
   cpf: string;
-  email: string;
-  senha: string;
-  avatar: string;
-  whatsapp: string;
-  biografia: string;
-  agendas: ProfessorAgenda[];
+  numero_whatsapp: string;
+  url_foto: string;
+  sobre: string;
+}
+
+export interface ProfessorMateria {
+  id: number;
 }
 
 export interface ProfessorAgenda {
@@ -22,3 +35,4 @@ export interface ProfessorAgenda {
   horarioInicio: string;
   horarioFim: string;
 }
+

@@ -94,16 +94,16 @@ export class AlunoAulaComponent implements OnInit {
   obterMateria(professor: Professor): string {
     const materias = [] as string[];
     let materiaExibida = '';
+    return materiaExibida;
 
+    // for (const agenda of professor.agendas) {
+    //   agenda.nomeMateria = this.listaMateria.find(x => x.id === agenda.idMateria).nome;
+    //   if (materias.findIndex(x => x === agenda.nomeMateria) < 0) {
+    //     materias.push(agenda.nomeMateria);
+    //     materiaExibida += `/ ${agenda.nomeMateria}`;
+    //   }
+    // }
 
-    for (const agenda of professor.agendas) {
-      agenda.nomeMateria = this.listaMateria.find(x => x.id === agenda.idMateria).nome;
-      if (materias.findIndex(x => x === agenda.nomeMateria) < 0) {
-        materias.push(agenda.nomeMateria);
-        materiaExibida += `/ ${agenda.nomeMateria}`;
-      }
-    }
-
-    return materiaExibida.substring(2);
+    // return materiaExibida.substring(2);
   }
 }

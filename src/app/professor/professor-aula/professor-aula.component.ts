@@ -51,7 +51,7 @@ export class ProfessorAulaComponent implements OnInit {
   }
 
   atualizarDados(): void {
-    this.router.navigateByUrl(`/professor/atualizar/${this.professor.id}`);
+    this.router.navigateByUrl(`/professor/atualizar/${this.professor.login.id}`);
   }
 
   preencherAgenda(diaSemana): void {
