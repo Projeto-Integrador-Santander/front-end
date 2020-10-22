@@ -24,7 +24,16 @@ export class AlunoAulaComponent implements OnInit {
   loading = false;
 
   constructor(private fb: FormBuilder, private comumService: ComumService, private alunoService: AlunoService,
-    private professorService: ProfessorService, private route: ActivatedRoute, private router: Router) { }
+    private professorService: ProfessorService, private route: ActivatedRoute, private router: Router) { 
+
+      this.form = this.fb.group({
+        id: 0,
+        idAluno: 0,
+        idMateria: 0,
+        diaSemana: 0,
+        indVoluntario: false,
+      });
+    }
 
   ngOnInit(): void {
 
@@ -56,7 +65,7 @@ export class AlunoAulaComponent implements OnInit {
   }
 
   atualizarDados(): void {
-    this.router.navigateByUrl(`/aluno/atualizar/${this.aluno.id}`);
+    this.router.navigateByUrl(`/aluno/atualizar/${this.aluno.login.id}`);
   }
 
   filtrarProfessorAgenda(): void {

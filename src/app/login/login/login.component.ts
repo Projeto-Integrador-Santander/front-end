@@ -70,13 +70,13 @@ export class LoginComponent implements OnInit {
 
     } else {
 
-      this.alunoService.login({ email, senha }).subscribe((aluno) => {
-        if (!aluno || !aluno.id) {
+      this.alunoService.login({ email, senha }).subscribe((login) => {
+        if (!login || !login.id) {
           alert('E-mail/ Senha inválidos');
           return;
         }
 
-        this.router.navigateByUrl(`/aluno/aula/${aluno.id}`);
+        this.router.navigateByUrl(`/aluno/aula/${login.id}`);
       },
         (erro) => {
           alert(erro.error);

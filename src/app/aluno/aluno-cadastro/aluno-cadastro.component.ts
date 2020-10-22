@@ -21,7 +21,23 @@ export class AlunoCadastroComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private comumService: ComumService,
     private alunoService: AlunoService, private router: Router, private route: ActivatedRoute,
-    private _location: Location) { }
+    private _location: Location) {
+      this.form = this.fb.group({
+        id: 0,
+        perfil: this.fb.group({
+          nome: '',
+          sobrenome: '',
+          cpf: '',
+          numero_whatsapp: '',
+        }),
+        login: this.fb.group({
+          email: '',
+          senha: '',
+          senhaConfirmar: '',
+        }),
+        materias: this.fb.array([])
+      });
+     }
 
   ngOnInit(): void {
 
@@ -49,6 +65,7 @@ export class AlunoCadastroComponent implements OnInit {
             numero_whatsapp: [this.aluno.perfil.numero_whatsapp, Validators.required],
           }),
           login: this.fb.group({
+            id: [this.aluno.login.id, Validators.required],
             email: [this.aluno.login.email, Validators.required],
             senha: [this.aluno.login.senha, Validators.required],
             senhaConfirmar: [this.aluno.login.senha, Validators.required],
@@ -143,7 +160,7 @@ export class AlunoCadastroComponent implements OnInit {
       );
     } else {
       this.alunoService.alterar(this.aluno).subscribe((aluno) => {
-        this.router.navigateByUrl(`/aluno/aula/${this.aluno.id}`);
+        this.router.navigateByUrl(`/aluno/aula/${aluno.login.id}`);
       },
         (error) => {
           alert(error.error);
