@@ -1,4 +1,4 @@
-import { Professor } from './../../model/professor';
+import { Professor, ProfessorPerfil } from './../../model/professor';
 import { forkJoin } from 'rxjs';
 import { AlunoService } from './../../services/aluno.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -105,5 +105,9 @@ export class AlunoAulaComponent implements OnInit {
     // }
 
     // return materiaExibida.substring(2);
+  }
+
+  obterLinkWhatsapp(perfil: ProfessorPerfil): string {
+    return `https://api.whatsapp.com/send?phone=55${perfil.numero_whatsapp}&text=Ol%C3%A1%2C%20gostaria%20de%20saber%20a%20disponibilidade%20das%20aulas`;
   }
 }
