@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProfessorService } from './../../services/professor.service';
@@ -16,7 +17,7 @@ export class ProfessorCadastroComponent implements OnInit {
   professor = {} as Professor;
 
   constructor(private fb: FormBuilder, private professorService: ProfessorService, private router: Router,
-    private route: ActivatedRoute, private _location: Location) { 
+              private route: ActivatedRoute, private _location: Location, private spinner: NgxSpinnerService) { 
       this.form = this.fb.group({
         id: 0,
         perfil: this.fb.group({
@@ -38,6 +39,7 @@ export class ProfessorCadastroComponent implements OnInit {
   ngOnInit(): void {
 
     const id = +this.route.snapshot.paramMap.get('id');
+    this.spinner.show();
 
     this.professorService.obter({ id }).subscribe((professor) => {
       this.professor = professor;
@@ -63,8 +65,10 @@ export class ProfessorCadastroComponent implements OnInit {
         const loginForm = this.form.controls.login as FormGroup;
         loginForm.controls.email.disable();
       }
+      this.spinner.hide();
     },
       (erro) => {
+        this.spinner.hide();
         alert(erro.error);
       }
     );
@@ -124,19 +128,24 @@ export class ProfessorCadastroComponent implements OnInit {
       return;
     }
 
+    this.spinner.show();
     if (!this.professor.id) {
       this.professorService.incluir(this.professor).subscribe((professor) => {
+        this.spinner.hide();
         this.router.navigateByUrl('/professor/login');
       },
         (error) => {
+          this.spinner.hide();
           alert(error.error);
         }
       );
     } else {
       this.professorService.alterar(this.professor).subscribe((professor) => {
+        this.spinner.hide();
         this.router.navigateByUrl(`/professor/aula/${this.professor.login.id}`);
       },
         (error) => {
+          this.spinner.hide();
           alert(error.error);
         }
       );

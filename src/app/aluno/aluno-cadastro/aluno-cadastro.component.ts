@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Base } from './../../model/base';
 import { ComumService } from './../../services/comum.service';
 import { forkJoin } from 'rxjs';
@@ -20,8 +21,8 @@ export class AlunoCadastroComponent implements OnInit {
   listaMatricula = [] as Base[];
 
   constructor(private fb: FormBuilder, private comumService: ComumService,
-    private alunoService: AlunoService, private router: Router, private route: ActivatedRoute,
-    private _location: Location) {
+              private alunoService: AlunoService, private router: Router, private route: ActivatedRoute,
+              private _location: Location, private spinner: NgxSpinnerService) {
       this.form = this.fb.group({
         id: 0,
         perfil: this.fb.group({
@@ -43,6 +44,7 @@ export class AlunoCadastroComponent implements OnInit {
 
     const id = +this.route.snapshot.paramMap.get('id');
 
+    this.spinner.show();
     forkJoin([this.comumService.listarMateria(), this.alunoService.obter({ id })])
       .subscribe((response) => {
         this.listaMatricula = response[0];
@@ -77,8 +79,10 @@ export class AlunoCadastroComponent implements OnInit {
         } else {
           this.incluirMateria(0);
         }
+        this.spinner.hide();
       },
         (erro) => {
+          this.spinner.hide();
           alert(erro.error);
         }
       );
@@ -142,19 +146,24 @@ export class AlunoCadastroComponent implements OnInit {
       return;
     }
 
+    this.spinner.show();
     if (!this.aluno.id) {
       this.alunoService.incluir(this.aluno).subscribe((aluno) => {
+        this.spinner.hide();
         this.router.navigateByUrl('/aluno/login');
       },
         (error) => {
+          this.spinner.hide();
           alert(error.error);
         }
       );
     } else {
       this.alunoService.alterar(this.aluno).subscribe((aluno) => {
+        this.spinner.hide();
         this.router.navigateByUrl(`/aluno/aula/${aluno.login.id}`);
       },
         (error) => {
+          this.spinner.hide();
           alert(error.error);
         }
       );
@@ -163,5 +172,9 @@ export class AlunoCadastroComponent implements OnInit {
 
   voltarAula(): void {
     this._location.back();
+  }
+
+  excluirMateria(indexMateria: number): void {
+    this.materias.removeAt(indexMateria);
   }
 }

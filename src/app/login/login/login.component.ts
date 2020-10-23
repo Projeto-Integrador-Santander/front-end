@@ -3,6 +3,7 @@ import { ProfessorService } from './../../services/professor.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   tipoLogin = '';
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router,
-    private professorService: ProfessorService, private alunoService: AlunoService) { }
+              private professorService: ProfessorService, private alunoService: AlunoService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -53,17 +55,19 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.spinner.show();
     if (this.tipoLogin === 'professor') {
 
       this.professorService.login({ email, senha }).subscribe((professor) => {
+        this.spinner.hide();
         if (!professor || !professor.id) {
           alert('E-mail/ Senha inválidos');
           return;
         }
-
         this.router.navigateByUrl(`/professor/aula/${professor.id}`);
       },
         (erro) => {
+          this.spinner.hide();
           alert(erro.error);
         }
       );
@@ -71,6 +75,7 @@ export class LoginComponent implements OnInit {
     } else {
 
       this.alunoService.login({ email, senha }).subscribe((login) => {
+        this.spinner.hide();
         if (!login || !login.id) {
           alert('E-mail/ Senha inválidos');
           return;
@@ -79,6 +84,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl(`/aluno/aula/${login.id}`);
       },
         (erro) => {
+          this.spinner.hide();
           alert(erro.error);
         }
       );

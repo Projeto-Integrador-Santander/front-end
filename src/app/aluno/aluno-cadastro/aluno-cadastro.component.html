@@ -1,3 +1,4 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 <div class="page-give-classes">
   <div class="container">
     <header class="page-header">
@@ -59,13 +60,20 @@
             <ng-container [formGroupName]="i">
 
               <div class="select-block">
-                <label for="materia">Matéria</label>
-                <select name="materia" id="materia" formControlName="id" required>
-                  <option value="0" selected disabled>Selecione uma opção</option>
-                  <option *ngFor="let matricula of listaMatricula" [value]="matricula.id">
-                    {{matricula.nome}}
-                  </option>
-                </select>
+                <label style="display: block;" for="materia">Matéria</label>
+                <div style="display: flex; justify-content: space-between;">
+                  <select name="materia" id="materia" formControlName="id" required>
+                    <option value="0" selected disabled>Selecione uma opção</option>
+                    <option *ngFor="let matricula of listaMatricula" [value]="matricula.id">
+                      {{matricula.nome}}
+                    </option>
+                  </select>
+                  <div style="display: flex; align-items: center; justify-items: center;">
+                    <button (click)="excluirMateria(i)" *ngIf="control.get('id').value > 0" mat-mini-fab color="warn" aria-label="Excluir matéria">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
               </div>
             </ng-container>
 
