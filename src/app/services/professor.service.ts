@@ -27,7 +27,7 @@ export class ProfessorService {
       return of({
         perfil: {},
         login: {},
-        materias: []
+        materia: []
       } as Professor);
     }
 

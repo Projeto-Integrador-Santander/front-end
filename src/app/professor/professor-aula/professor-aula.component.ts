@@ -98,7 +98,7 @@ export class ProfessorAulaComponent implements OnInit {
     }
 
     if (!ProfessorAgenda.idMateria) {
-      alert('Selecione a matricula.');
+      alert('Selecione a materia.');
       return;
     }
 

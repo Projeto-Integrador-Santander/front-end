@@ -44,7 +44,7 @@ export class AlunoAulaComponent implements OnInit {
       this.listaSemana = resultados[1];
       this.aluno = resultados[2];
 
-      this.listaMateria = resultados[0].filter(mat => this.aluno.materias.findIndex(al => al.id === mat.id) >= 0);
+      this.listaMateria = resultados[0].filter(mat => this.aluno.materia.findIndex(al => al.id === mat.id) >= 0);
 
       this.form = this.fb.group({
         id: 0,

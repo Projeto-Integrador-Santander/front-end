@@ -1,7 +1,7 @@
 export interface Professor {
   id: number;
   login: ProfessorLogin;
-  materias: ProfessorMateria[];
+  materia: ProfessorMateria[];
   perfil: ProfessorPerfil;
 }
 
