@@ -1,3 +1,5 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
 <div class="page-give-classes">
   <div class="container">
     <header class="page-header">
@@ -34,15 +36,15 @@
               </ng-container>
               <ng-container matColumnDef="valor">
                 <th mat-header-cell *matHeaderCellDef> Valor </th>
-                <td mat-cell *matCellDef="let element"> {{element.indVoluntario ? '--' : element.valor}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.voluntario ? '--' : element.valor}} </td>
               </ng-container>
-              <ng-container matColumnDef="horarioInicio">
+              <ng-container matColumnDef="inicio">
                 <th mat-header-cell *matHeaderCellDef> Horário Início </th>
-                <td mat-cell *matCellDef="let element"> {{element.horarioInicio}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.inicio}} </td>
               </ng-container>
-              <ng-container matColumnDef="horarioFim">
+              <ng-container matColumnDef="fim">
                 <th mat-header-cell *matHeaderCellDef> Horário Término </th>
-                <td mat-cell *matCellDef="let element"> {{element.horarioFim}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.fim}} </td>
               </ng-container>
 
               <ng-container matColumnDef="opcao">
@@ -65,7 +67,7 @@
           <legend>Matéria/Horário</legend>
           <div class="select-block">
             <label for="materia">Matéria</label>
-            <select name="materia" id="materia" formControlName="idMateria" required>
+            <select name="materia" id="materia" formControlName="materiaId" required>
               <option value="0" selected disabled>Selecione uma opção</option>
               <option *ngFor="let materia of listaMateria" [value]="materia.id">
                 {{materia.nome}}
@@ -73,9 +75,9 @@
             </select>
           </div>
           <div style="margin: 20px 0;">
-            <mat-slide-toggle formControlName="indVoluntario">Voluntário</mat-slide-toggle>
+            <mat-slide-toggle formControlName="voluntario">Voluntário</mat-slide-toggle>
           </div>
-          <div *ngIf="!form.controls.indVoluntario.value" class="input-block">
+          <div *ngIf="!form.controls.voluntario.value" class="input-block">
             <label for="valor">Custo da sua hora/aula
               <small>(R$)</small>
             </label>
@@ -84,12 +86,12 @@
           <div class="schedule-item">
             <div class="input-block">
               <label for="horarioInicio">Das</label>
-              <input type="time" id="horarioInicio" name="horarioInicio" formControlName="horarioInicio">
+              <input type="time" id="horarioInicio" name="horarioInicio" formControlName="inicio">
             </div>
 
             <div class="input-block">
               <label for="horarioFim">Até</label>
-              <input type="time" id="horarioFim" name="horarioFim" formControlName="horarioFim">
+              <input type="time" id="horarioFim" name="horarioFim" formControlName="fim">
             </div>
           </div>
         </fieldset>

@@ -26,13 +26,13 @@ export interface ProfessorMateria {
 
 export interface ProfessorAgenda {
   id: number;
-  idProfessor: number;
-  idMateria: number;
+  pessoaId: number;
+  materiaId: number;
   diaSemana: number;
   nomeMateria: string;
-  indVoluntario: boolean;
+  voluntario: boolean;
   valor: number;
-  horarioInicio: string;
-  horarioFim: string;
+  inicio: string;
+  fim: string;
 }
 

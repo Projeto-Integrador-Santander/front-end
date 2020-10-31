@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Professor, ProfessorAgenda } from './../../model/professor';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,32 +20,46 @@ export class ProfessorAulaComponent implements OnInit {
   professor = {} as Professor;
   listaProfessorAgenda = [] as ProfessorAgenda[];
   form = new FormGroup({});
-  nomeColunas: string[] = ['nomeMateria', 'valor', 'horarioInicio', 'horarioFim', 'opcao'];
+  nomeColunas: string[] = ['nomeMateria', 'valor', 'inicio', 'fim', 'opcao'];
   diaSemana: number;
-  constructor(private fb: FormBuilder, private comumService: ComumService, private professorService: ProfessorService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private fb: FormBuilder, private comumService: ComumService, private professorService: ProfessorService,
+    private spinner: NgxSpinnerService, private route: ActivatedRoute, private router: Router) {
+    this.form = this.fb.group({
+      id: 0,
+      pessoaId: this.professor.id,
+      materiaId: 0,
+      diaSemana: 0,
+      voluntario: false,
+      valor: 0,
+      inicio: '',
+      fim: ''
+    });
+   }
 
   ngOnInit(): void {
 
     const id = +this.route.snapshot.paramMap.get('id');
-
+    this.spinner.show();
     forkJoin(this.comumService.listarMateria(), this.comumService.listarSemana(), this.professorService.obter({ id })).subscribe((resultados) => {
+      this.spinner.hide();
       this.listaMateria = resultados[0];
       this.listaSemana = resultados[1];
       this.professor = resultados[2];
 
       this.form = this.fb.group({
         id: 0,
-        idProfessor: this.professor.id,
-        idMateria: 0,
+        pessoaId: this.professor.id,
+        materiaId: 0,
         diaSemana: 0,
-        indVoluntario: false,
+        voluntario: false,
         valor: 0,
-        horarioInicio: '',
-        horarioFim: ''
+        inicio: '',
+        fim: ''
       });
 
     },
       (erro) => {
+        this.spinner.hide();
         alert(erro.error);
       }
     );
@@ -55,16 +70,17 @@ export class ProfessorAulaComponent implements OnInit {
   }
 
   preencherAgenda(diaSemana): void {
+    this.spinner.show();
     this.diaSemana = +diaSemana;
     this.professorService.listarAgenda({
       idProfessor: this.professor.id,
       diaSemana: this.diaSemana
     }).subscribe((agendas) => {
-
+      this.spinner.hide();
       if (agendas ?.length > 0) {
         this.listaProfessorAgenda = agendas.map(
           (ProfessorAgenda) => {
-            ProfessorAgenda.nomeMateria = this.listaMateria.find(x => x.id === ProfessorAgenda.idMateria).nome;
+            ProfessorAgenda.nomeMateria = this.listaMateria.find(x => x.id === ProfessorAgenda.materiaId).nome;
             return ProfessorAgenda;
           });
       }
@@ -74,8 +90,10 @@ export class ProfessorAulaComponent implements OnInit {
   }
 
   removerAgenda(id: number): void {
+    this.spinner.show();
     this.professorService.excluirAgenda({ id }).subscribe(() => {
     }, (error) => {
+      this.spinner.hide();
       console.log(error.error);
     }, () => {
       this.preencherAgenda(this.diaSemana.toString());
@@ -86,9 +104,9 @@ export class ProfessorAulaComponent implements OnInit {
     const ProfessorAgenda = this.form.value as ProfessorAgenda;
 
     ProfessorAgenda.diaSemana = +this.diaSemana;
-    ProfessorAgenda.idMateria = +ProfessorAgenda.idMateria;
+    ProfessorAgenda.materiaId = +ProfessorAgenda.materiaId;
 
-    if (ProfessorAgenda.indVoluntario) {
+    if (ProfessorAgenda.voluntario) {
       ProfessorAgenda.valor = 0;
     }
 
@@ -97,34 +115,36 @@ export class ProfessorAulaComponent implements OnInit {
       return;
     }
 
-    if (!ProfessorAgenda.idMateria) {
+    if (!ProfessorAgenda.materiaId) {
       alert('Selecione a materia.');
       return;
     }
 
-    if (!ProfessorAgenda.indVoluntario && !ProfessorAgenda.valor) {
+    if (!ProfessorAgenda.voluntario && !ProfessorAgenda.valor) {
       alert('Informe o valor aula.');
       return;
     }
 
-    if (!ProfessorAgenda.horarioInicio) {
+    if (!ProfessorAgenda.inicio) {
       alert('Selecione a horário de início.');
       return;
     }
 
-    if (!ProfessorAgenda.horarioFim) {
+    if (!ProfessorAgenda.fim) {
       alert('Selecione a horário de fim.');
       return;
     }
 
+    this.spinner.show();
     this.professorService.incluirAgenda(ProfessorAgenda).subscribe((response) => {
+      this.spinner.hide();
       this.preencherAgenda(this.diaSemana.toString());
-      this.form.controls.horarioInicio.setValue(ProfessorAgenda.horarioFim);
-      this.form.controls.horarioFim.setValue('');
+      this.form.controls.inicio.setValue(ProfessorAgenda.fim);
+      this.form.controls.fim.setValue('');
     },
       (error) => {
+        this.spinner.hide();
         alert(error.error);
       });
   }
-
 }

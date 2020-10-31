@@ -39,18 +39,20 @@ export class ProfessorService {
   }
 
   listarAgenda(parametro: { idProfessor: number, diaSemana: number }): Observable<ProfessorAgenda[]> {
-    return of([]);
+    return this.http.get<ProfessorAgenda[]>(`${environment.urlApi}agenda/v1/${parametro.idProfessor}/${parametro.diaSemana}`);
   }
 
   incluirAgenda(professorAgenda: ProfessorAgenda): Observable<ProfessorAgenda> {
-    return of({} as ProfessorAgenda);
+    return this.http.post<ProfessorAgenda>(`${environment.urlApi}agenda/v1`, professorAgenda);
   }
 
   excluirAgenda(parametro: { id: number }): Observable<void> {
-    return of();
+    return this.http.delete<void>(`${environment.urlApi}agenda/v1/${parametro.id}`);
+
   }
 
   listarProfessorAgenda(parametro: { idsMateria: number[], diaSemana: number }): Observable<Professor[]> {
-    return of([]);
+    return this.http.get<Professor[]>(`${environment.urlApi}agenda/v1/${parametro.idsMateria}/${parametro.diaSemana}`);
+
   }
 }
