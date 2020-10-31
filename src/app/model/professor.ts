@@ -3,6 +3,7 @@ export interface Professor {
   login: ProfessorLogin;
   materia: ProfessorMateria[];
   perfil: ProfessorPerfil;
+  agenda: ProfessorAgenda[];
 }
 
 export interface ProfessorLogin {

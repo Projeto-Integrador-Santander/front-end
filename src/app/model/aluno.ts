@@ -1,7 +1,7 @@
 export interface Aluno {
   id: number;
   login: AlunoLogin;
-  materia: AlunoMateria[];
+  materias: AlunoMateria[];
   perfil: AlunoPerfil;
 }
 

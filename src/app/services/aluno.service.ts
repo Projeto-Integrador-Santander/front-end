@@ -26,7 +26,7 @@ export class AlunoService {
       return of({
         perfil: {},
         login: {},
-        materia: []
+        materias: []
       } as Aluno);
     }
 

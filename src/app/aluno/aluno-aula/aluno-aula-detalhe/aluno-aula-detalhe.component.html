@@ -2,7 +2,9 @@
   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab.descricaoDiaSemana">
     <ng-container *ngFor="let item of tab.horarios">
       <button mat-raised-button color="primary" style="margin: 20px 10px 0 10px;">
-        {{item.horarioInicio}} - {{item.horarioFim}} <span *ngIf="item.valor">R$ {{item.valor}}</span>
+        {{item.inicio}} - {{item.fim}} <span *ngIf="item.valor">R$ {{item.valor}}</span>
+        <br>
+        {{item.nomeMateria}}
       </button>
     </ng-container>
   </mat-tab>

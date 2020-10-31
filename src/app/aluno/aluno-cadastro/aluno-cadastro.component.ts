@@ -72,8 +72,8 @@ export class AlunoCadastroComponent implements OnInit {
           loginForm.controls.email.disable();
         }
 
-        if (this.aluno.materia?.length > 0) {
-          for (const materia of this.aluno.materia) {
+        if (this.aluno.materias?.length > 0) {
+          for (const materia of this.aluno.materias) {
             this.incluirMateria(materia.id);
           }
         } else {

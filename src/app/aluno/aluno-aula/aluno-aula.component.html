@@ -1,3 +1,4 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-spin-clockwise" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 <div class="page-study">
   <div class="container">
     <header class="page-header">
@@ -14,7 +15,7 @@
         <form class="search-teachers" [formGroup]="form" (ngSubmit)="filtrarProfessorAgenda()">
           <div class="select-block">
             <label for="idMateria">Matéria</label>
-            <select name="idMateria" id="idMateria" formControlName="idMateria">
+            <select name="idMateria" id="idMateria" formControlName="materiaId">
               <option value="0" selected>Todas as matérias</option>
               <option *ngFor="let materia of listaMateria" [value]="materia.id">
                 {{materia.nome}}

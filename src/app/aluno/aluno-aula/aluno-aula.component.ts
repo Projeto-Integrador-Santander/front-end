@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Professor, ProfessorPerfil } from './../../model/professor';
 import { forkJoin } from 'rxjs';
 import { AlunoService } from './../../services/aluno.service';
@@ -18,40 +19,45 @@ export class AlunoAulaComponent implements OnInit {
 
   listaMateria = [] as Base[];
   listaSemana = [] as Base[];
+  private professores = [] as Professor[];
   listaProfessor = [] as Professor[];
   aluno = {} as Aluno;
   form = new FormGroup({});
   loading = false;
 
   constructor(private fb: FormBuilder, private comumService: ComumService, private alunoService: AlunoService,
-    private professorService: ProfessorService, private route: ActivatedRoute, private router: Router) { 
-
+    private professorService: ProfessorService, private route: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService) { 
       this.form = this.fb.group({
         id: 0,
         idAluno: 0,
-        idMateria: 0,
+        materiaId: 0,
         diaSemana: 0,
-        indVoluntario: false,
+        voluntario: false,
       });
     }
 
   ngOnInit(): void {
 
+    this.spinner.show();
     const id = +this.route.snapshot.paramMap.get('id');
 
-    forkJoin([this.comumService.listarMateria(), this.comumService.listarSemana(), this.alunoService.obter({ id })]).subscribe((resultados) => {
-      // this.listaMateria = resultados[0];
+    forkJoin([
+      this.comumService.listarMateria(), 
+      this.comumService.listarSemana(), 
+      this.alunoService.obter({ id }),
+      this.professorService.listarProfessor()
+    ]).subscribe((resultados) => {
+      this.spinner.hide();
       this.listaSemana = resultados[1];
       this.aluno = resultados[2];
-
-      this.listaMateria = resultados[0].filter(mat => this.aluno.materia.findIndex(al => al.id === mat.id) >= 0);
-
+      this.listaMateria = resultados[0].filter(mat => this.aluno.materias.findIndex(al => al.id === mat.id) >= 0);
+      this.professores = resultados[3];
       this.form = this.fb.group({
         id: 0,
         idAluno: this.aluno.id,
-        idMateria: 0,
+        materiaId: 0,
         diaSemana: 0,
-        indVoluntario: false,
+        voluntario: false,
       });
 
     },
@@ -71,40 +77,40 @@ export class AlunoAulaComponent implements OnInit {
   filtrarProfessorAgenda(): void {
 
     this.loading = true;
-    const listaMatriculaAluno = +this.form.controls.idMateria.value ?
-      [+this.form.controls.idMateria.value] : this.listaMateria.map((materia) => materia.id);
+    const listaMatriculaAluno = +this.form.controls.materiaId.value ?
+      [+this.form.controls.materiaId.value] : this.listaMateria.map((materia) => materia.id);
     this.listaProfessor = [];
+    
     this.professorService.listarProfessorAgenda({
       idsMateria: listaMatriculaAluno,
       diaSemana: +this.form.controls.diaSemana.value,
-    }).subscribe((professores) => {
+    }).subscribe((listaAgenda) => {
+      this.loading = false;
+      if (listaAgenda?.length) {
+        this.listaProfessor = this.professores.map((professor) => {
+          const p = { ...professor};
+          p.agenda = listaAgenda.filter(x => x.pessoaId === professor.id);
+          return p;
+        });
 
-      setTimeout(() => {
-        if (professores ?.length > 0) {
-          this.listaProfessor = [...professores];
-        } else {
-          this.listaProfessor = [];
-        }
-        this.loading = false;
-      }, 500);
-
+        this.listaProfessor = this.listaProfessor.filter(x => x.agenda?.length);
+      }
     });
   }
 
   obterMateria(professor: Professor): string {
     const materias = [] as string[];
     let materiaExibida = '';
-    return materiaExibida;
 
-    // for (const agenda of professor.agendas) {
-    //   agenda.nomeMateria = this.listaMateria.find(x => x.id === agenda.idMateria).nome;
-    //   if (materias.findIndex(x => x === agenda.nomeMateria) < 0) {
-    //     materias.push(agenda.nomeMateria);
-    //     materiaExibida += `/ ${agenda.nomeMateria}`;
-    //   }
-    // }
+    for (const agenda of professor.agenda) {
+      agenda.nomeMateria = this.listaMateria.find(x => x.id === agenda.materiaId).nome;
+      if (materias.findIndex(x => x === agenda.nomeMateria) < 0) {
+        materias.push(agenda.nomeMateria);
+        materiaExibida += `/ ${agenda.nomeMateria}`;
+      }
+    }
 
-    // return materiaExibida.substring(2);
+    return materiaExibida.substring(2);
   }
 
   obterLinkWhatsapp(perfil: ProfessorPerfil): string {

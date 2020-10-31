@@ -5,8 +5,8 @@ export interface AgendaSemana {
 }
 
 export interface AgendaSemanaHorario {
-  horarioInicio: string;
-  horarioFim: string;
+  inicio: string;
+  fim: string;
   valor: number;
   nomeMateria: string;
 }
