@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -46,12 +47,12 @@ export class LoginComponent implements OnInit {
     const senha = this.form.controls.senha.value;
 
     if (!email) {
-      alert('E-mail em branco');
+      Swal.fire('Oops...', 'E-mail em branco.', 'error')
       return;
     }
 
     if (!senha) {
-      alert('Senha em branco');
+      Swal.fire('Oops...', 'Senha em branco.', 'error')
       return;
     }
 
@@ -61,14 +62,13 @@ export class LoginComponent implements OnInit {
       this.professorService.login({ email, senha }).subscribe((professor) => {
         this.spinner.hide();
         if (!professor || !professor.id) {
-          alert('E-mail/ Senha inválidos');
+          Swal.fire('Oops...', 'E-mail/ Senha inválidos.', 'error')
           return;
         }
         this.router.navigateByUrl(`/professor/aula/${professor.id}`);
       },
-        (erro) => {
-          this.spinner.hide();
-          alert(erro.error);
+        (error) => {
+          this.trataErro(error);
         }
       );
 
@@ -77,15 +77,14 @@ export class LoginComponent implements OnInit {
       this.alunoService.login({ email, senha }).subscribe((login) => {
         this.spinner.hide();
         if (!login || !login.id) {
-          alert('E-mail/ Senha inválidos');
+          Swal.fire('Oops...', 'E-mail/ Senha inválidos.', 'error')
           return;
         }
 
         this.router.navigateByUrl(`/aluno/aula/${login.id}`);
       },
-        (erro) => {
-          this.spinner.hide();
-          alert(erro.error);
+        (error) => {
+          this.trataErro(error);
         }
       );
     }
@@ -99,4 +98,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  trataErro(error): void{
+    this.spinner.hide();
+    if(error.error.mensagem != null && error.error.mensagem != ""){
+      Swal.fire("Erro!", error.error.mensagem, "error");
+    }else{
+      Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
+    }
+}
 }

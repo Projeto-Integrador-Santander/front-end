@@ -2,6 +2,7 @@ import { ProfessorService } from './../../services/professor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-esqueci-minha-senha',
@@ -34,11 +35,11 @@ export class EsqueciMinhaSenhaComponent implements OnInit {
     const email = this.form.controls.email.value;
 
     if (!email) {
-      alert('E-mail em branco');
+      Swal.fire('Oops...', 'E-mail em branco.', 'error')
       return;
     }
 
-    alert('E-mail para recupeção de senha enviado');
+    Swal.fire('Sucesso!', 'E-mail para recupeção de senha enviado.', 'success')
 
     if (this.tipoLogin === 'professor') {
       this.router.navigateByUrl('/professor/login');

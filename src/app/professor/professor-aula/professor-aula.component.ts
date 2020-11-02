@@ -7,6 +7,7 @@ import { ComumService } from './../../services/comum.service';
 import { Base } from './../../model/base';
 import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-professor-aula',
@@ -58,9 +59,8 @@ export class ProfessorAulaComponent implements OnInit {
       });
 
     },
-      (erro) => {
-        this.spinner.hide();
-        alert(erro.error);
+      (error) => {
+        this.trataErro(error);
       }
     );
   }
@@ -93,8 +93,7 @@ export class ProfessorAulaComponent implements OnInit {
     this.spinner.show();
     this.professorService.excluirAgenda({ id }).subscribe(() => {
     }, (error) => {
-      this.spinner.hide();
-      console.log(error.error);
+      this.trataErro(error);
     }, () => {
       this.preencherAgenda(this.diaSemana.toString());
     });
@@ -111,27 +110,27 @@ export class ProfessorAulaComponent implements OnInit {
     }
 
     if (!ProfessorAgenda.diaSemana) {
-      alert('Selecione a dia da semana.');
+      Swal.fire('Oops...', 'Selecione a dia da semana.', 'error')
       return;
     }
 
     if (!ProfessorAgenda.materiaId) {
-      alert('Selecione a materia.');
+      Swal.fire('Oops...', 'Selecione a materia.', 'error')
       return;
     }
 
     if (!ProfessorAgenda.voluntario && !ProfessorAgenda.valor) {
-      alert('Informe o valor aula.');
+      Swal.fire('Oops...', 'Informe o valor aula.', 'error')
       return;
     }
 
     if (!ProfessorAgenda.inicio) {
-      alert('Selecione a horário de início.');
+      Swal.fire('Oops...', 'Selecione a horário de início.', 'error')
       return;
     }
 
     if (!ProfessorAgenda.fim) {
-      alert('Selecione a horário de fim.');
+      Swal.fire('Oops...', 'Selecione a horário de fim.', 'error')
       return;
     }
 
@@ -143,8 +142,16 @@ export class ProfessorAulaComponent implements OnInit {
       this.form.controls.fim.setValue('');
     },
       (error) => {
-        this.spinner.hide();
-        alert(error.error);
+        this.trataErro(error);
       });
+  }
+
+  trataErro(error): void{
+    this.spinner.hide();
+    if(error.error.mensagem != null && error.error.mensagem != ""){
+      Swal.fire("Erro!", error.error.mensagem, "error");
+    }else{
+      Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
+    }
   }
 }

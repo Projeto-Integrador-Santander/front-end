@@ -82,9 +82,8 @@ export class AlunoCadastroComponent implements OnInit {
         }
         this.spinner.hide();
       },
-        (erro) => {
-          this.spinner.hide();
-          alert(erro.error);
+        (error) => {
+          this.trataErro(error);
         }
       );
   }
@@ -108,36 +107,30 @@ export class AlunoCadastroComponent implements OnInit {
 
     if (!this.aluno.perfil.nome) {
       Swal.fire('Oops...', 'Informe o seu nome.', 'error')
-      //alert('Informe o seu nome.');
       return;
     }
     if (!this.aluno.perfil.sobrenome) {
       Swal.fire('Oops...', 'Informe o seu sobrenome.', 'error')
-      //alert('Informe o seu sobrenome.');
       return;
     }
 
     if (!this.aluno.perfil.cpf) {
       Swal.fire('Oops...', 'Informe o seu CPF.', 'error')
-      //alert('Informe o seu CPF.');
       return;
     }
 
     if (!this.aluno.perfil.numero_whatsapp) {
       Swal.fire('Oops...', 'Informe o seu whatsapp.', 'error')
-      //alert('Informe o seu whatsapp.');
       return;
     }
 
     if (!this.aluno.id && !this.aluno.login.email) {
       Swal.fire('Oops...', 'Informe o seu email.', 'error')
-      //alert('Informe o seu e-mail.');
       return;
     }
 
     if (!this.aluno.login.senha) {
       Swal.fire('Oops...', 'Informe a sua senha.', 'error')
-      //alert('Informe a sua senha.');
       return;
     }
 
@@ -145,20 +138,18 @@ export class AlunoCadastroComponent implements OnInit {
 
     if (!login.controls.senhaConfirmar.value) {
       Swal.fire('Oops...', 'Informe a senha de confirmação.', 'error')
-      //alert('Informe a senha de confirmação.');
       return;
     }
 
     if (this.aluno.login.senha !== login.controls.senhaConfirmar.value) {
       Swal.fire('Oops...', 'Senhas estão diferentes.', 'error') 
-      //alert('Senhas estão diferentes.');
       return;
     }
 
     this.spinner.show();
     if (!this.aluno.id) {
       this.alunoService.incluir(this.aluno).subscribe((aluno) => {
-        Swal.fire("Sucesso!", "Cadastro com sucesso, seja bem vindo ao Educanjos.", "success");
+        Swal.fire("Sucesso!", "Cadastro efetuado com sucesso, seja bem vindo ao Educanjos.", "success");
         this.spinner.hide();
         this.router.navigateByUrl('/aluno/login');
       },

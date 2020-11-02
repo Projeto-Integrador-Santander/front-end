@@ -5,6 +5,7 @@ import { ProfessorService } from './../../services/professor.service';
 import { Professor } from './../../model/professor';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-professor-cadastro',
@@ -78,65 +79,66 @@ export class ProfessorCadastroComponent implements OnInit {
     this.professor = this.form.value;
 
     if (!this.professor.perfil.nome) {
-      alert('Informe o seu nome.');
+      Swal.fire('Oops...', 'Informe o seu nome.', 'error')
       return;
     }
+
     if (!this.professor.perfil.sobrenome) {
-      alert('Informe o seu Sobrenome.');
+      Swal.fire('Oops...', 'Informe o seu Sobrenome.', 'error')
       return;
     }
 
     if (!this.professor.perfil.cpf) {
-      alert('Informe seu CPF');
+      Swal.fire('Oops...', 'Informe seu CPF.', 'error')
       return;
       }
 
     if (!this.professor.perfil.url_foto) {
-      alert('Informe o seu avatar.');
+      Swal.fire('Oops...', 'Informe o seu avatar.', 'error')
       return;
     }
 
     if (!this.professor.perfil.numero_whatsapp) {
-      alert('Informe o seu whatsapp.');
+      Swal.fire('Oops...', 'Informe o seu whatsapp.', 'error')
       return;
     }
 
     if (!this.professor.perfil.sobre) {
-      alert('Informe a sua biografia.');
+      Swal.fire('Oops...', 'Informe a sua biografia.', 'error')
       return;
     }
 
     if (!this.professor.id && !this.professor.login.email) {
-      alert('Informe o seu e-mail.');
+      Swal.fire('Oops...', 'Informe o seu e-mail.', 'error')
       return;
     }
 
     if (!this.professor.login.senha) {
-      alert('Informe a sua senha.');
+      Swal.fire('Oops...', 'Informe a sua senha.', 'error')
       return;
     }
 
     const login = this.form.controls.login as FormGroup;
 
     if (!login.controls.senhaConfirmar.value) {
-      alert('Informe a senha de confirmação.');
+      Swal.fire('Oops...', 'Informe a senha de confirmação.', 'error')
       return;
     }
 
     if (this.professor.login.senha !== login.controls.senhaConfirmar.value) {
-      alert('Senhas estão diferentes.');
+      Swal.fire('Oops...', 'Senhas estão diferentes.', 'error')
       return;
     }
 
     this.spinner.show();
     if (!this.professor.id) {
       this.professorService.incluir(this.professor).subscribe((professor) => {
+        Swal.fire("Sucesso!", "Cadastro efetuado com sucesso, seja bem vindo ao Educanjos.", "success");
         this.spinner.hide();
         this.router.navigateByUrl('/professor/login');
       },
         (error) => {
-          this.spinner.hide();
-          alert(error.error);
+          this.trataErro(error);
         }
       );
     } else {
@@ -145,8 +147,7 @@ export class ProfessorCadastroComponent implements OnInit {
         this.router.navigateByUrl(`/professor/aula/${this.professor.login.id}`);
       },
         (error) => {
-          this.spinner.hide();
-          alert(error.error);
+          this.trataErro(error);
         }
       );
     }
@@ -156,4 +157,12 @@ export class ProfessorCadastroComponent implements OnInit {
     this._location.back();
   }
 
+  trataErro(error): void{
+    this.spinner.hide();
+    if(error.error.mensagem != null && error.error.mensagem != ""){
+      Swal.fire("Erro!", error.error.mensagem, "error");
+    }else{
+      Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
+    }
+  }
 }

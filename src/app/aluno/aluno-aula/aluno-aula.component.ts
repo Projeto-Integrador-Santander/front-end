@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Aluno } from './../../model/aluno';
 import { Base } from './../../model/base';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-aluno-aula',
@@ -61,8 +62,8 @@ export class AlunoAulaComponent implements OnInit {
       });
 
     },
-      (erro) => {
-        alert(erro.error);
+      (error) => {
+        this.trataErro(error);
       },
       () => {
         this.filtrarProfessorAgenda();
@@ -116,4 +117,13 @@ export class AlunoAulaComponent implements OnInit {
   obterLinkWhatsapp(perfil: ProfessorPerfil): string {
     return `https://api.whatsapp.com/send?phone=55${perfil.numero_whatsapp}&text=Ol%C3%A1%2C%20gostaria%20de%20saber%20a%20disponibilidade%20das%20aulas`;
   }
+
+  trataErro(error): void{
+    this.spinner.hide();
+    if(error.error.mensagem != null && error.error.mensagem != ""){
+      Swal.fire("Erro!", error.error.mensagem, "error");
+    }else{
+      Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
+    }
+}
 }
