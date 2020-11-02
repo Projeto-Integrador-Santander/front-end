@@ -24,6 +24,7 @@
     "ngx-mask": "^10.0.1",
     "ngx-spinner": "^10.0.1",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^10.9.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

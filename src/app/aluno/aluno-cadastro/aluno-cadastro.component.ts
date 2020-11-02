@@ -8,6 +8,7 @@ import { Aluno } from './../../model/aluno';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-aluno-cadastro',
@@ -106,65 +107,73 @@ export class AlunoCadastroComponent implements OnInit {
     this.aluno = this.form.value;
 
     if (!this.aluno.perfil.nome) {
-      alert('Informe o seu nome.');
+      Swal.fire('Oops...', 'Informe o seu nome.', 'error')
+      //alert('Informe o seu nome.');
       return;
     }
     if (!this.aluno.perfil.sobrenome) {
-      alert('Informe o seu sobrenome.');
+      Swal.fire('Oops...', 'Informe o seu sobrenome.', 'error')
+      //alert('Informe o seu sobrenome.');
       return;
     }
 
     if (!this.aluno.perfil.cpf) {
-      alert('Informe o seu CPF.');
+      Swal.fire('Oops...', 'Informe o seu CPF.', 'error')
+      //alert('Informe o seu CPF.');
       return;
     }
 
     if (!this.aluno.perfil.numero_whatsapp) {
-      alert('Informe o seu whatsapp.');
+      Swal.fire('Oops...', 'Informe o seu whatsapp.', 'error')
+      //alert('Informe o seu whatsapp.');
       return;
     }
 
     if (!this.aluno.id && !this.aluno.login.email) {
-      alert('Informe o seu e-mail.');
+      Swal.fire('Oops...', 'Informe o seu email.', 'error')
+      //alert('Informe o seu e-mail.');
       return;
     }
 
     if (!this.aluno.login.senha) {
-      alert('Informe a sua senha.');
+      Swal.fire('Oops...', 'Informe a sua senha.', 'error')
+      //alert('Informe a sua senha.');
       return;
     }
 
     const login = this.form.controls.login as FormGroup;
 
     if (!login.controls.senhaConfirmar.value) {
-      alert('Informe a senha de confirmação.');
+      Swal.fire('Oops...', 'Informe a senha de confirmação.', 'error')
+      //alert('Informe a senha de confirmação.');
       return;
     }
 
     if (this.aluno.login.senha !== login.controls.senhaConfirmar.value) {
-      alert('Senhas estão diferentes.');
+      Swal.fire('Oops...', 'Senhas estão diferentes.', 'error') 
+      //alert('Senhas estão diferentes.');
       return;
     }
 
     this.spinner.show();
     if (!this.aluno.id) {
       this.alunoService.incluir(this.aluno).subscribe((aluno) => {
+        Swal.fire("Sucesso!", "Cadastro com sucesso, seja bem vindo ao Educanjos.", "success");
         this.spinner.hide();
         this.router.navigateByUrl('/aluno/login');
       },
         (error) => {
-          this.spinner.hide();
-          alert(error.error);
+         this.trataErro(error);
         }
       );
     } else {
       this.alunoService.alterar(this.aluno).subscribe((aluno) => {
+        Swal.fire("Sucesso!", "Cadastro atualizado com sucesso.", "success");
         this.spinner.hide();
         this.router.navigateByUrl(`/aluno/aula/${aluno.login.id}`);
       },
         (error) => {
-          this.spinner.hide();
-          alert(error.error);
+          this.trataErro(error);
         }
       );
     }
@@ -176,5 +185,14 @@ export class AlunoCadastroComponent implements OnInit {
 
   excluirMateria(indexMateria: number): void {
     this.materias.removeAt(indexMateria);
+  }
+
+  trataErro(error): void{
+      this.spinner.hide();
+      if(error.error.mensagem != null && error.error.mensagem != ""){
+        Swal.fire("Erro!", error.error.mensagem, "error");
+      }else{
+        Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
+      }
   }
 }
