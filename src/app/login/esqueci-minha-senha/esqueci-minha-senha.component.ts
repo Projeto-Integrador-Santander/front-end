@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Email } from '../../model/email';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-esqueci-minha-senha',
@@ -14,9 +16,10 @@ export class EsqueciMinhaSenhaComponent implements OnInit {
   url = '';
   form = new FormGroup({});
   tipoLogin = '';
+  emailObject = {} as Email;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router,
-    private professorService: ProfessorService) { }
+    private professorService: ProfessorService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -39,8 +42,29 @@ export class EsqueciMinhaSenhaComponent implements OnInit {
       return;
     }
 
-    Swal.fire('Sucesso!', 'E-mail para recupeção de senha enviado.', 'success')
+    this.emailObject.email = email;
 
+    this.professorService.esqueciSenha(this.emailObject).subscribe((response) => {
+      Swal.fire('Sucesso!', 'E-mail para recupeção de senha enviado.', 'success')
+      this.trataRedirecionamento();
+    },
+      (error) => {
+       this.trataErro(error);
+      }
+    );
+
+  }
+
+  trataErro(error): void{
+    this.trataRedirecionamento();
+    if(error.error.mensagem != null && error.error.mensagem != ""){
+      Swal.fire("Erro!", error.error.mensagem, "error");
+    }else{
+      Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
+    }
+  }
+
+  trataRedirecionamento():void{
     if (this.tipoLogin === 'professor') {
       this.router.navigateByUrl('/professor/login');
     } else {

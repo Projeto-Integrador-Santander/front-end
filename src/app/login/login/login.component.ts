@@ -105,5 +105,5 @@ export class LoginComponent implements OnInit {
     }else{
       Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
     }
-}
+  }
 }
