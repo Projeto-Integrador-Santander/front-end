@@ -1,32 +1,36 @@
+import { Component, OnInit } from '@angular/core';
 import { ComumService } from './../../services/comum.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Email } from '../../model/email';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-esqueci-minha-senha',
-  templateUrl: './esqueci-minha-senha.component.html',
-  styleUrls: ['./esqueci-minha-senha.component.css']
+  selector: 'app-atualiza-senha',
+  templateUrl: './atualiza-senha.component.html',
+  styleUrls: ['./atualiza-senha.component.css']
 })
-export class EsqueciMinhaSenhaComponent implements OnInit {
+export class AtualizaSenhaComponent implements OnInit {
 
   url = '';
   form = new FormGroup({});
   tipoLogin = '';
+  idRequisicao = 0;
   emailObject = {} as Email;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router,
     private comumService: ComumService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      email: ['']
+    this.form = this.fb.group({  
+      email: [''],
+      senha: [''],
+      confirmasenha: ['']
     });
 
     this.tipoLogin = this.route.snapshot.parent.url[0].path;
+    this.idRequisicao = +this.route.snapshot.paramMap.get('id');
 
     if (this.tipoLogin !== 'professor' && this.tipoLogin !== 'aluno') {
       this.router.navigateByUrl('/');
@@ -36,15 +40,33 @@ export class EsqueciMinhaSenhaComponent implements OnInit {
 
   enviar(): void {
     const email = this.form.controls.email.value;
+    const senha = this.form.controls.senha.value;
+    const confirmasenha = this.form.controls.confirmasenha.value;
 
     if (!email) {
-      Swal.fire('Oops...', 'E-mail em branco.', 'error')
+      Swal.fire('Oops...', 'Email em branco.', 'error')
+      return;
+    }
+
+    if (!senha) {
+      Swal.fire('Oops...', 'Senha em branco.', 'error')
+      return;
+    }
+
+    if (!confirmasenha) {
+      Swal.fire('Oops...', 'Confirmação de senha em branco.', 'error')
+      return;
+    }
+
+    if (senha != confirmasenha) {
+      Swal.fire('Oops...', 'Senha e confirmação de senha diferem.', 'error')
       return;
     }
 
     this.emailObject.email = email;
+    this.emailObject.senha = senha;
 
-    this.comumService.esqueciSenha(this.emailObject).subscribe((response) => {
+    this.comumService.atualizaSenha(this.emailObject, this.idRequisicao).subscribe((response) => {
       Swal.fire('Sucesso!', 'E-mail para recupeção de senha enviado.', 'success')
       this.trataRedirecionamento();
     },

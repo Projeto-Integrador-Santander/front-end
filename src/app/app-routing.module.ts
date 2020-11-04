@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AtualizaSenhaComponent } from './login/atualiza-senha/atualiza-senha.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path:'esqueci-minha-senha/:id',
+        component: AtualizaSenhaComponent
       }
     ]
   },
@@ -56,6 +61,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path:'esqueci-minha-senha/:id',
+        component: AtualizaSenhaComponent
       }
     ]
   },

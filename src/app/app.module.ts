@@ -24,6 +24,7 @@ import { AlunoAulaDetalheComponent } from './aluno/aluno-aula/aluno-aula-detalhe
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AtualizaSenhaComponent } from './login/atualiza-senha/atualiza-senha.component';
  
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     EsqueciMinhaSenhaComponent,
     AlunoCadastroComponent,
     AlunoAulaComponent,
-    AlunoAulaDetalheComponent
+    AlunoAulaDetalheComponent,
+    AtualizaSenhaComponent
   ],
   imports: [
     BrowserModule,

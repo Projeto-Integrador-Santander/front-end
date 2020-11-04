@@ -4,8 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Professor, ProfessorAgenda } from './../model/professor';
 import { Injectable } from '@angular/core';
-import { Email } from './../model/email';
-
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +58,5 @@ export class ProfessorService {
     return this.http.get<Professor[]>(`${environment.urlApi}pessoa/v1/professor`);
   }
 
-  esqueciSenha(email : Email): Observable<Email> {
-    return this.http.post<Email>(`${environment.urlApi}login/v1/esqueci-senha`, email);
-  }
+
 }
