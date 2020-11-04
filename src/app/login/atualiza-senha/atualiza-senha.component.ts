@@ -67,7 +67,7 @@ export class AtualizaSenhaComponent implements OnInit {
     this.emailObject.senha = senha;
 
     this.comumService.atualizaSenha(this.emailObject, this.idRequisicao).subscribe((response) => {
-      Swal.fire('Sucesso!', 'E-mail para recupeção de senha enviado.', 'success')
+      Swal.fire('Sucesso!', 'Senha atualizada com sucesso.', 'success')
       this.trataRedirecionamento();
     },
       (error) => {

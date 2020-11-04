@@ -49,6 +49,6 @@ export class ComumService {
   }
 
   atualizaSenha(email : Email, idRequisicao: any): Observable<Email> {
-    return this.http.patch<Email>(`${environment.urlApi}login/v1/atualiza-senha/` + idRequisicao, email);
+    return this.http.post<Email>(`${environment.urlApi}login/v1/atualiza-senha/` + idRequisicao, email);
   }
 }
