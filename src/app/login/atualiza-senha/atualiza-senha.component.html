@@ -1,0 +1,41 @@
+<div class="page-give-classes">
+    <div class="container">
+      <header class="page-header">
+        <div class="top-bar-container">
+          <a href="/">
+            <img src="assets/img/icons/back.svg" alt="Voltar">
+          </a>
+        </div>
+        <div class="header-content">
+          <strong>Recuperação de senha</strong>
+        </div>
+      </header>
+      <main>
+        <form [formGroup]="form" (ngSubmit)="enviar()">
+          <fieldset>
+            <legend>Seus dados</legend>
+            <div class="input-block">
+              <label for="email">Seu email</label>
+              <input name="email" id="email" formControlName="email" required>
+            </div>
+            <div class="input-block">
+              <label for="senha">Nova senha</label>
+              <input type="password" name="senha" id="confirmaemail" formControlName="senha" required>
+            </div>
+            <div class="input-block">
+                <label for="confirmasenha">Confirme nova senha</label>
+                <input type="password" name="confirmasenha" id="confirmasenha" formControlName="confirmasenha" required>
+              </div>
+          </fieldset>
+          <footer>
+            <p>
+              <img src="assets/img/icons/warning.svg" alt="Aviso importante">
+              Importante! <br>
+              O email deve ser igual ao informado na solicitação de recuperação de senha.
+            </p>
+            <button type="submit">Enviar Solicitação</button>
+          </footer>
+        </form>
+      </main>
+    </div>
+  </div>

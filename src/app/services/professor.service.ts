@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { Professor, ProfessorAgenda } from './../model/professor';
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -58,4 +57,6 @@ export class ProfessorService {
   listarProfessor(): Observable<Professor[]> {
     return this.http.get<Professor[]>(`${environment.urlApi}pessoa/v1/professor`);
   }
+
+
 }
