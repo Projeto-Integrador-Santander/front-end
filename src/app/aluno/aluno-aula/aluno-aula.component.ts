@@ -96,6 +96,8 @@ export class AlunoAulaComponent implements OnInit {
 
         this.listaProfessor = this.listaProfessor.filter(x => x.agenda?.length);
       }
+    }, (erro) => {
+      this.loading = false;
     });
   }
 
