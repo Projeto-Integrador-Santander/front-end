@@ -48,7 +48,7 @@ export class ComumService {
     return this.http.post<Email>(`${environment.urlApi}login/v1/esqueci-senha`, email);
   }
 
-  atualizaSenha(email : Email, idRequisicao: any): Observable<Email> {
-    return this.http.post<Email>(`${environment.urlApi}login/v1/atualiza-senha/` + idRequisicao, email);
+  atualizaSenha(email : Email): Observable<Email> {
+    return this.http.post<Email>(`${environment.urlApi}login/v1/atualiza-senha/`, email);
   }
 }

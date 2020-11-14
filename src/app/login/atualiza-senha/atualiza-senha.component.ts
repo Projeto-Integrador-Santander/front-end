@@ -16,7 +16,7 @@ export class AtualizaSenhaComponent implements OnInit {
   url = '';
   form = new FormGroup({});
   tipoLogin = '';
-  idRequisicao = 0;
+  token = '';
   emailObject = {} as Email;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router,
@@ -24,13 +24,13 @@ export class AtualizaSenhaComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({  
-      email: [''],
       senha: [''],
       confirmasenha: ['']
     });
 
     this.tipoLogin = this.route.snapshot.parent.url[0].path;
-    this.idRequisicao = +this.route.snapshot.paramMap.get('id');
+    this.token = this.route.snapshot.paramMap.get('id');
+    console.log(this.token);
 
     if (this.tipoLogin !== 'professor' && this.tipoLogin !== 'aluno') {
       this.router.navigateByUrl('/');
@@ -39,14 +39,9 @@ export class AtualizaSenhaComponent implements OnInit {
   }
 
   enviar(): void {
-    const email = this.form.controls.email.value;
     const senha = this.form.controls.senha.value;
     const confirmasenha = this.form.controls.confirmasenha.value;
 
-    if (!email) {
-      Swal.fire('Oops...', 'Email em branco.', 'error')
-      return;
-    }
 
     if (!senha) {
       Swal.fire('Oops...', 'Senha em branco.', 'error')
@@ -63,10 +58,10 @@ export class AtualizaSenhaComponent implements OnInit {
       return;
     }
 
-    this.emailObject.email = email;
     this.emailObject.senha = senha;
+    this.emailObject.token = this.token;
 
-    this.comumService.atualizaSenha(this.emailObject, this.idRequisicao).subscribe((response) => {
+    this.comumService.atualizaSenha(this.emailObject).subscribe((response) => {
       Swal.fire('Sucesso!', 'Senha atualizada com sucesso.', 'success')
       this.trataRedirecionamento();
     },
