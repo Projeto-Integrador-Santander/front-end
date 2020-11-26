@@ -23,7 +23,7 @@ export class AtualizaSenhaComponent implements OnInit {
     private comumService: ComumService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({  
+    this.form = this.fb.group({
       senha: [''],
       confirmasenha: ['']
     });
@@ -60,28 +60,30 @@ export class AtualizaSenhaComponent implements OnInit {
 
     this.emailObject.senha = senha;
     this.emailObject.token = this.token;
-
+    this.spinner.show();
     this.comumService.atualizaSenha(this.emailObject).subscribe((response) => {
+      this.spinner.hide();
       Swal.fire('Sucesso!', 'Senha atualizada com sucesso.', 'success')
       this.trataRedirecionamento();
     },
       (error) => {
-       this.trataErro(error);
+        this.spinner.hide();
+        this.trataErro(error);
       }
     );
 
   }
 
-  trataErro(error): void{
+  trataErro(error): void {
     this.trataRedirecionamento();
-    if(error.error.mensagem != null && error.error.mensagem != ""){
+    if (error.error.mensagem != null && error.error.mensagem != "") {
       Swal.fire("Erro!", error.error.mensagem, "error");
-    }else{
+    } else {
       Swal.fire("Parece que algo deu errado!", "Internal Server Error.", "error");
     }
   }
 
-  trataRedirecionamento():void{
+  trataRedirecionamento(): void {
     if (this.tipoLogin === 'professor') {
       this.router.navigateByUrl('/professor/login');
     } else {

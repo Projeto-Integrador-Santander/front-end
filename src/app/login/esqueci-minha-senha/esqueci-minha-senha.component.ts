@@ -43,12 +43,14 @@ export class EsqueciMinhaSenhaComponent implements OnInit {
     }
 
     this.emailObject.email = email;
-
+    this.spinner.show();
     this.comumService.esqueciSenha(this.emailObject).subscribe((response) => {
+      this.spinner.hide();
       Swal.fire('Sucesso!', 'E-mail para recupeção de senha enviado.', 'success')
       this.trataRedirecionamento();
     },
       (error) => {
+        this.spinner.hide();
        this.trataErro(error);
       }
     );
