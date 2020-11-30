@@ -1,7 +1,0 @@
----
-aplicações :
-- nome : " implantação da nuvem angular "
-  caminho : " dist / frontend "
-  memória : 256M
-  buildpack :
-  - " https://github.com/cloudfoundry/staticfile-buildpack.git 
