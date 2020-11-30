@@ -31,7 +31,7 @@ textarea {
 .header-logo {
   width: 100vw;
   height: 40vh;
-  background-image: url("./../../../assets/img/success-background.svg");
+  background-image: url("https://raw.githubusercontent.com/Projeto-Integrador-Santander/informacoes/bb73088303f810fea161c125895d10bbbf37ee50/assets/img/success-background.svg");
   background-size: cover;
   background-repeat: no-repeat;
   background-color: var(--color-primary);
