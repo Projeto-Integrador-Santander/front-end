@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  urlApi: 'http://localhost:8080/'
+  urlApi: 'https://educanjosapi.herokuapp.com/'
 };
